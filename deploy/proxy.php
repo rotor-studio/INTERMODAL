@@ -15,6 +15,7 @@ $GUPPY_BBOX = [
   'maxLon' => -4.5,
   'maxLat' => 44.2,
 ];
+$CTA_DIR = __DIR__ . '/data/cta';
 
 $CACHE_DIR = __DIR__ . '/cache';
 $LOG_DIR = __DIR__ . '/logs';
@@ -253,6 +254,241 @@ function build_emtusa_stops_by_line(string $lineId): ?array {
   return $data;
 }
 
+function parse_csv(string $text): array {
+  $rows = [];
+  $row = [];
+  $field = '';
+  $inQuotes = false;
+  $len = strlen($text);
+  for ($i = 0; $i < $len; $i++) {
+    $char = $text[$i];
+    $next = $i + 1 < $len ? $text[$i + 1] : '';
+    if ($char === '"') {
+      if ($inQuotes && $next === '"') {
+        $field .= '"';
+        $i++;
+      } else {
+        $inQuotes = !$inQuotes;
+      }
+      continue;
+    }
+    if ($char === ',' && !$inQuotes) {
+      $row[] = $field;
+      $field = '';
+      continue;
+    }
+    if (($char === "\n" || $char === "\r") && !$inQuotes) {
+      if ($char === "\r" && $next === "\n") $i++;
+      $row[] = $field;
+      if (count($row) > 1 || $row[0] !== '') {
+        $rows[] = $row;
+      }
+      $row = [];
+      $field = '';
+      continue;
+    }
+    $field .= $char;
+  }
+  if ($field !== '' || $row) {
+    $row[] = $field;
+    $rows[] = $row;
+  }
+  if (!$rows) return [];
+  $headers = array_map('trim', array_shift($rows));
+  return array_map(function ($cols) use ($headers) {
+    $obj = [];
+    foreach ($headers as $idx => $h) {
+      $obj[$h] = $cols[$idx] ?? '';
+    }
+    return $obj;
+  }, $rows);
+}
+
+function build_cta_routes_geo(): ?array {
+  global $CTA_DIR;
+  $cached = cache_get('cta_routes_geo', 6 * 60 * 60);
+  if ($cached) return json_decode($cached, true);
+  $routesText = @file_get_contents($CTA_DIR . '/routes.txt');
+  $tripsText = @file_get_contents($CTA_DIR . '/trips.txt');
+  $shapesText = @file_get_contents($CTA_DIR . '/shapes.txt');
+  if ($routesText === false || $tripsText === false || $shapesText === false) return null;
+  $routes = parse_csv($routesText);
+  $trips = parse_csv($tripsText);
+  $shapes = parse_csv($shapesText);
+
+  $routeShape = [];
+  foreach ($trips as $trip) {
+    $routeId = $trip['route_id'] ?? '';
+    if (!$routeId || isset($routeShape[$routeId])) continue;
+    if (!empty($trip['shape_id'])) $routeShape[$routeId] = $trip['shape_id'];
+  }
+
+  $shapePoints = [];
+  foreach ($shapes as $shape) {
+    $shapeId = $shape['shape_id'] ?? '';
+    if (!$shapeId) continue;
+    $lat = (float)($shape['shape_pt_lat'] ?? 0);
+    $lon = (float)($shape['shape_pt_lon'] ?? 0);
+    $seq = (int)($shape['shape_pt_sequence'] ?? 0);
+    if (!is_finite($lat) || !is_finite($lon)) continue;
+    if (!isset($shapePoints[$shapeId])) $shapePoints[$shapeId] = [];
+    $shapePoints[$shapeId][] = ['lat' => $lat, 'lon' => $lon, 'seq' => $seq];
+  }
+
+  $output = ['updated' => gmdate('c'), 'routes' => []];
+  foreach ($routes as $route) {
+    $routeId = $route['route_id'] ?? '';
+    if (!$routeId) continue;
+    $shapeId = $routeShape[$routeId] ?? null;
+    if (!$shapeId || !isset($shapePoints[$shapeId])) continue;
+    $points = $shapePoints[$shapeId];
+    usort($points, fn($a, $b) => $a['seq'] <=> $b['seq']);
+    $coords = array_map(fn($p) => [$p['lat'], $p['lon']], $points);
+    if (count($coords) < 2) continue;
+    $color = !empty($route['route_color']) ? '#' . $route['route_color'] : '#0b7285';
+    $output['routes'][] = [
+      'id' => $routeId,
+      'shortName' => $route['route_short_name'] ?? '',
+      'longName' => $route['route_long_name'] ?? '',
+      'color' => $color,
+      'coords' => $coords,
+    ];
+  }
+
+  cache_set('cta_routes_geo', json_encode($output));
+  return $output;
+}
+
+function build_cta_stops(): ?array {
+  global $CTA_DIR;
+  $cached = cache_get('cta_stops', 6 * 60 * 60);
+  if ($cached) return json_decode($cached, true);
+  $routesText = @file_get_contents($CTA_DIR . '/routes.txt');
+  $tripsText = @file_get_contents($CTA_DIR . '/trips.txt');
+  $stopsText = @file_get_contents($CTA_DIR . '/stops.txt');
+  $stopTimesText = @file_get_contents($CTA_DIR . '/stop_times.txt');
+  if ($routesText === false || $tripsText === false || $stopsText === false || $stopTimesText === false) {
+    return null;
+  }
+  $routes = parse_csv($routesText);
+  $trips = parse_csv($tripsText);
+  $stops = parse_csv($stopsText);
+  $stopTimes = parse_csv($stopTimesText);
+
+  $tripRoute = [];
+  foreach ($trips as $trip) {
+    if (!empty($trip['trip_id']) && !empty($trip['route_id'])) {
+      $tripRoute[$trip['trip_id']] = $trip['route_id'];
+    }
+  }
+
+  $stopRoutes = [];
+  foreach ($stopTimes as $st) {
+    $tripId = $st['trip_id'] ?? '';
+    $stopId = $st['stop_id'] ?? '';
+    $routeId = $tripRoute[$tripId] ?? '';
+    if (!$routeId || !$stopId) continue;
+    if (!isset($stopRoutes[$stopId])) $stopRoutes[$stopId] = [];
+    $stopRoutes[$stopId][$routeId] = true;
+  }
+
+  $routesMeta = [];
+  foreach ($routes as $route) {
+    if (empty($route['route_id'])) continue;
+    $routesMeta[] = [
+      'id' => $route['route_id'],
+      'shortName' => $route['route_short_name'] ?? '',
+      'longName' => $route['route_long_name'] ?? '',
+      'color' => !empty($route['route_color']) ? '#' . $route['route_color'] : '#0b7285',
+    ];
+  }
+
+  $outputStops = array_map(function ($stop) use ($stopRoutes) {
+    $id = $stop['stop_id'] ?? '';
+    return [
+      'id' => $id,
+      'name' => $stop['stop_name'] ?? '',
+      'desc' => $stop['stop_desc'] ?? '',
+      'lat' => (float)($stop['stop_lat'] ?? 0),
+      'lon' => (float)($stop['stop_lon'] ?? 0),
+      'routeIds' => array_keys($stopRoutes[$id] ?? []),
+    ];
+  }, $stops);
+
+  $output = [
+    'updated' => gmdate('c'),
+    'routes' => $routesMeta,
+    'stops' => $outputStops,
+  ];
+  cache_set('cta_stops', json_encode($output));
+  return $output;
+}
+
+function build_cta_route_stops(): ?array {
+  global $CTA_DIR;
+  $cached = cache_get('cta_route_stops', 6 * 60 * 60);
+  if ($cached) return json_decode($cached, true);
+  $tripsText = @file_get_contents($CTA_DIR . '/trips.txt');
+  $stopsText = @file_get_contents($CTA_DIR . '/stops.txt');
+  $stopTimesText = @file_get_contents($CTA_DIR . '/stop_times.txt');
+  if ($tripsText === false || $stopsText === false || $stopTimesText === false) {
+    return null;
+  }
+  $trips = parse_csv($tripsText);
+  $stops = parse_csv($stopsText);
+  $stopTimes = parse_csv($stopTimesText);
+
+  $stopMeta = [];
+  foreach ($stops as $stop) {
+    if (empty($stop['stop_id'])) continue;
+    $stopMeta[$stop['stop_id']] = [
+      'id' => $stop['stop_id'],
+      'name' => $stop['stop_name'] ?? '',
+      'desc' => $stop['stop_desc'] ?? '',
+      'lat' => (float)($stop['stop_lat'] ?? 0),
+      'lon' => (float)($stop['stop_lon'] ?? 0),
+    ];
+  }
+
+  $routeTrip = [];
+  foreach ($trips as $trip) {
+    if (empty($trip['route_id']) || empty($trip['trip_id'])) continue;
+    if (!isset($routeTrip[$trip['route_id']])) {
+      $routeTrip[$trip['route_id']] = $trip['trip_id'];
+    }
+  }
+
+  $tripStops = [];
+  foreach ($stopTimes as $st) {
+    $tripId = $st['trip_id'] ?? '';
+    $stopId = $st['stop_id'] ?? '';
+    if (!$tripId || !$stopId) continue;
+    $seq = (int)($st['stop_sequence'] ?? 0);
+    if (!isset($tripStops[$tripId])) $tripStops[$tripId] = [];
+    $tripStops[$tripId][] = ['stopId' => $stopId, 'seq' => $seq];
+  }
+
+  $routeStops = [];
+  foreach ($routeTrip as $routeId => $tripId) {
+    $entries = $tripStops[$tripId] ?? [];
+    usort($entries, fn($a, $b) => $a['seq'] <=> $b['seq']);
+    $list = [];
+    $seen = [];
+    foreach ($entries as $entry) {
+      $sid = $entry['stopId'];
+      if (isset($seen[$sid])) continue;
+      $meta = $stopMeta[$sid] ?? null;
+      if (!$meta) continue;
+      $seen[$sid] = true;
+      $list[] = $meta + ['sequence' => $entry['seq']];
+    }
+    $routeStops[$routeId] = $list;
+  }
+
+  cache_set('cta_route_stops', json_encode($routeStops));
+  return $routeStops;
+}
+
 function point_in_polygon(float $lon, float $lat, array $polygon): bool {
   $inside = false;
   $count = count($polygon);
@@ -480,6 +716,24 @@ switch (true) {
     $data = build_guppy_map();
     if (!$data) json_response(['error' => 'Guppy fetch failed'], 502);
     json_response($data);
+    break;
+  case starts_with($pathname, '/api/cta/routes-geo'):
+    $data = build_cta_routes_geo();
+    if (!$data) json_response(['error' => 'CTA routes failed'], 502);
+    json_response($data);
+    break;
+  case starts_with($pathname, '/api/cta/stops'):
+    $data = build_cta_stops();
+    if (!$data) json_response(['error' => 'CTA stops failed'], 502);
+    json_response($data);
+    break;
+  case starts_with($pathname, '/api/cta/route-stops'):
+    $routeId = $query['route'] ?? '';
+    if (!$routeId) json_response(['error' => 'Missing route'], 400);
+    $routeStops = build_cta_route_stops();
+    if (!$routeStops) json_response(['error' => 'CTA route stops failed'], 502);
+    $stops = $routeStops[$routeId] ?? [];
+    json_response(['routeId' => $routeId, 'stops' => $stops]);
     break;
   case starts_with($pathname, '/api/debug-log'):
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

@@ -1,0 +1,593 @@
+route_id,agency_id,route_short_name,route_long_name,route_type
+2,10,"Vil","Villa-Pola de Laviana [Barros]",3
+5,19,"Lla","Llanes-Meré",3
+6,19,"Lla","Llanes-Arenas de Cabrales [Panes]",3
+7,19,"Can","Cangas de Onís-Oseja de Sajambre",3
+8,19,"Can","Cangas de Onís-Posada de Valdeón",3
+9,19,"Can","Cangas de Onís-Beleño",3
+10,19,"Ovi","Oviedo-Pola de Siero [Consejerías]",3
+11,19,"Ovi","Oviedo-Pola de Siero [Facultades]",3
+14,19,"Tiñ","Tiñana-Pola de Siero",3
+15,19,"Pre","Premió-Oviedo",3
+24,19,"Ovi","Oviedo-Barredo [Lugo de Llanera]",3
+32,25,"Gij","Gijón-Ambás",3
+33,19,"La ","La Malatería-Llanes",3
+34,19,"Por","Porrua-Llanes",3
+37,19,"Vil","Villanueva-Llanes",3
+39,19,"Tre","Tresgrandas-Colombres",3
+40,19,"La ","La Malatería-Posada de Llanes",3
+41,13,"Vil","Villaviciosa-Infiesto",3
+42,19,"Por","Porrua-Posada de Llanes",3
+43,19,"Can","Cangas de Onís-Arenas de Cabrales",3
+58,23,"Mor","Moreda-Santibáñez de Murias",3
+62,19,"Ovi","Oviedo-Cangas de Onís [Campus del Cristo] [Semidirecto] [AVE]",3
+63,20,"Pro","Proaza-Trubia",3
+64,20,"Sam","Sama de Grado-Trubia",3
+67,19,"Arr","Arriondas-Bustio [Arenas de Cabrales] [Colombres] [Panes]",3
+68,26,"Can","Cangas del Narcea-San Antolín de Ibias [Seroiro]",3
+70,26,"Can","Cangas del Narcea-San Salvador de Valledor",3
+75,19,"Arr","Arriondas-Bustio [Arenas de Cabrales] [Colombres] [Hospital] [Panes]",3
+78,56,"L22","L22 - Avilés-Pillarno",3
+79,12,"Vil","Villatresmil-Tineo",3
+80,12,"Bus","Busmión-Tineo",3
+81,19,"Can","Cangas de Onís-Covadonga",3
+82,45,"Ovi","Oviedo-Tiñana [Villamiana]",3
+83,45,"Ovi","Oviedo-Faro [Iglesia de Limanes]",3
+85,45,"Ovi","Oviedo-Mieres de Limanes [Villamiana]",3
+86,19,"Pon","Poncebos-Arenas de Cabrales",3
+87,45,"Ovi","Oviedo-Mieres de Limanes [Moreo]",3
+94,18,"Lua","Luarca-Pola de Allande",3
+96,19,"Arr","Arriondas-Arenas de Cabrales [Hospital]",3
+97,18,"Tin","Tineo-Porciles",3
+99,18,"Tin","Tineo-Navelgas",3
+100,18,"Lua","Luarca-Navelgas",3
+104,38,"Gra","Grandas de Salime-Navia [Hospital de Jarrio]",3
+105,38,"Xio","Xio-Navia [Hospital de Jarrio]",3
+111,41,"Ovi","Ovienes-Luarca",3
+112,16,"Gij","Gijón-Iglesia de Caldones",3
+114,16,"Gij","Gijón-San Jorge de Santurio",3
+115,9,"Hue","Hueria de Carrocera-Pola de Siero",3
+116,9,"Car","Carbayín Alto-Pola de Siero",3
+117,14,"La ","La Marea-Infiesto",3
+118,14,"Inf","Infiesto-San Vicente",3
+119,14,"Mel","Melarde-Infiesto",3
+120,14,"Qué","Qués-Infiesto",3
+121,14,"Are","Arenas-Infiesto",3
+122,14,"Rio","Riofabar-Infiesto",3
+123,14,"Pes","Pesquerín-Infiesto",3
+124,14,"Col","Colunga-Infiesto",3
+125,14,"La ","La Llama-Infiesto",3
+126,14,"Rob","Robledo-Infiesto",3
+127,14,"Lib","Libardón-Colunga",3
+128,14,"Lor","Loroñe-Colunga",3
+129,14,"Inf","Infiesto-Colunga [Borines]",3
+130,14,"Luc","Luces-Colunga",3
+131,14,"Col","Colunga-Huerres",3
+132,14,"Per","Pernús-Colunga",3
+133,14,"Pue","Puente Agüera-Villaviciosa",3
+134,14,"Col","Colunga-Villaviciosa [Priesca]",3
+135,14,"Col","Colunga-Villaviciosa [Lastres]",3
+136,14,"La ","La Busta-Villaviciosa",3
+137,14,"Sie","Sietes-Villaviciosa",3
+138,14,"Sie","Sietes-Infiesto",3
+139,53,"Sot","Sotrondio-Urbiés",3
+140,53,"Sot","Sotrondio-Los Caleyos",3
+141,53,"Sot","Sotrondio-Cabañas Nuevas",3
+142,53,"El ","El Entrego-El Corralón",3
+143,53,"Sot","Sotrondio-Sotrondio [Blimea]",3
+151,50,"Roz","Rozadas-Nava",3
+152,50,"Mel","Melendreros-Nava",3
+157,48,"Cor","Corias-Grado",3
+158,48,"Cor","Corias-Pravia",3
+159,48,"Cor","Corias-Salas",3
+163,48,"Cap","Capítulo-Grado",3
+165,48,"Ron","Rondero-Salas",3
+171,10,"Sam","Sama-San Julián de Bimenes [Rozadas]",3
+172,10,"El ","El Entrego-El Corvero",3
+173,10,"El ","El Corvero-Sama",3
+174,10,"El ","El Entrego-San Julián de Bimenes [La Camperona]",3
+177,10,"El ","El Polledo-El Entrego",3
+184,32,"Pue","Puentenuevo-Vegadeo",3
+185,32,"Veg","Vegadeo-Taramundi",3
+200,19,"Arr","Arriondas-Covadonga [Hospital]",3
+206,19,"Arr","Arriondas-Panes [Colombres] [Hospital] [Llanes]",3
+210,19,"Ovi","Oviedo-Llanes [Autovía]",3
+213,19,"Ovi","Oviedo-Llanes [Autovía] [Facultades]",3
+225,19,"Lla","Llanes-Panes [Colombres]",3
+226,19,"Arr","Arriondas-Llanes [Hospital] [Llovio]",3
+234,19,"Ovi","Oviedo-Aeropuerto",3
+246,19,"Pol","Pola de Allande-Cangas del Narcea",3
+249,19,"Ovi","Oviedo-Ribadeo [Costa]",3
+252,19,"La ","La Espina-Jarrio [Hospital]",3
+253,19,"Gij","Gijón-Avilés [Autopista]",3
+258,19,"Sot","Soto de LLanera-Posada de Llanera",3
+261,19,"Cud","Cudillero-Gijón [Tabaza]",3
+263,19,"Lla","Llanes-Arenas de Cabrales [Meré]",3
+266,19,"Ovi","Oviedo-Tineo [Directo Oviedo-Grado] [Campus del Cristo]",3
+268,19,"Ovi","Oviedo-Cangas del Narcea [Tineo]",3
+269,19,"Ovi","Oviedo-Cangas del Narcea [Puente San Martín]",3
+271,19,"Ovi","Oviedo-Cangas de Onís [Paradas]",3
+276,19,"Ovi","Oviedo-Villaviciosa",3
+277,19,"Ovi","Oviedo-Villaviciosa [Consejerías]",3
+280,19,"Vil","Villaviciosa-Rodiles",3
+288,19,"Gij","Gijón-Ribadesella [Directo]",3
+289,19,"Ovi","Oviedo-Salas",3
+290,19,"Ovi","Oviedo-Grado [Fuejo]",3
+291,19,"Ovi","Oviedo-Villablino [Pola de Somiedo]",3
+292,19,"Gra","Grado-Belmonte",3
+293,19,"Ovi","Oviedo-Villablino [Autopista]",3
+296,19,"Lua","Luanco-Gijón [La Calzada]",3
+297,19,"Lua","Luanco-Gijón",3
+298,19,"Lua","Luanco-Oviedo [Candás]",3
+369,19,"Ovi","Oviedo-Cangas de Onís [Facultades] [HUCA] [Semidirecto]",3
+370,19,"Ovi","Oviedo-Cangas de Onís [Semidirecto]",3
+375,19,"Ovi","Oviedo-Pola de Somiedo",3
+378,19,"Ovi","Oviedo-Cangas del Narcea [Hospital] [Tineo] [Trubia]",3
+380,19,"Can","Cangas de Onís-Lagos [Lanzadera Plan Lagos]",3
+399,55,"Inf","Infiesto-Camás",3
+401,55,"Vil","Villaviciosa-Camás",3
+402,55,"Nav","Nava-Camás",3
+403,55,"Cec","Ceceda-Nava",3
+409,28,"L1 ","L1 - La Luz-Piedras Blancas",3
+410,28,"L4 ","L4 - La Luz-Hospital",3
+411,28,"L5 ","L5 - Avilés-Parque Astur [Balagares]",3
+414,28,"L6 ","L6 - Entrevías-Avilés",3
+428,19,"Gij","Gijón-Villaviciosa [Tazones]",3
+429,19,"Vil","Villaviciosa-Argüero",3
+430,24,"Pol","Pola de Siero-Sama de Langreo [Carbayín]",3
+431,24,"Sam","Sama de Langreo-Carbayín Alto",3
+432,24,"Pol","Pola de Siero-Rozadas",3
+433,24,"Pol","Pola de Siero-Sama de Langreo [Carbayín] [Lieres]",3
+435,24,"Pol","Pola de Siero-Pola de Siero [Carbayín] [Lieres]",3
+437,24,"Tra","Traspando-Pola de Siero",3
+438,24,"La ","La Charca-Pola de Siero",3
+439,24,"Cel","Celles-Pola de Siero",3
+440,24,"Cas","Castiello-Pola de Siero",3
+450,24,"Pol","Pola de Siero-Sama de Langreo",3
+477,50,"La ","La Felguera-Nava",3
+479,50,"Nav","Nava-Nava [El Remedio]",3
+480,50,"San","San Román de Sariego-Nava",3
+481,50,"Arb","Arboleya-Nava",3
+482,50,"Lín","Línea 5.- Ceceda-Nava",3
+483,19,"Ovi","Oviedo-Pola de Siero [Argüelles] [Búho]",3
+486,19,"Sot","Soto de LLanera-Arlós [Biedes]",3
+489,19,"Sot","Soto de Llanera-Las Vegas",3
+501,19,"Sot","Soto de Llanera-San Cucao",3
+507,19,"Lug","Lugo de Llanera-San Cucao",3
+520,24,"Pol","Pola de Siero-Tiroco",3
+528,45,"Ovi","Oviedo-Mieres de Limanes [Estación] [Villamiana]",3
+529,45,"Ovi","Oviedo-Iglesia de Limanes [Estación] [Villamiana]",3
+530,45,"Ovi","Oviedo-Mieres de Limanes [Marqués de Santa Cruz] [Villamiana]",3
+542,19,"Gij","Gijón-Avilés [Paradas]",3
+543,56,"L23","L23 - Avilés-Friera [Circular]",3
+544,13,"Vil","Villaviciosa-Selorio",3
+545,13,"Vil","Villaviciosa-Carcabada",3
+548,19,"Avi","Avilés-Pravia [San Juan de la Arena]",3
+549,19,"Gij","Gijón-Pravia [San Juan de la Arena]",3
+552,55,"Inf","Infiesto-Infiesto",3
+564,19,"Ovi","Oviedo-Ribadeo [Costa] [Puerto de Vega]",3
+565,19,"Ovi","Oviedo-Ribadeo [Semidirecto]",3
+566,19,"Lua","Luanco-Oviedo [Candás] [Consejerías] [HUCA]",3
+583,59,"L2 ","L2 Mieres-Cenera",3
+589,59,"L4 ","L4 Mieres-Rebollada",3
+591,59,"L5 ","L5 Mieres-Loredo",3
+593,59,"L6 ","L6 Mieres-Carcarosa",3
+594,59,"L7 ","L7 Mieres-Paxío",3
+595,59,"L8 ","L8 Nuevo Santullano-Polio",3
+596,59,"L8 ","L8 Nuevo Santullano-Entrerríos",3
+598,59,"L9 ","L9 Mieres-Santo Emiliano",3
+613,19,"Tin","Tineo-Grandas de Salime [Gera]",3
+746,19,"Ovi","Oviedo-Cangas del Narcea [Tineo] [Trubia]",3
+753,19,"Gij","Gijón-Villaviciosa [Directo]",3
+768,19,"Gij","Gijón-Villaviciosa [El Gobernador]",3
+782,56,"L22","L22 - Avilés-La Cangueta",3
+789,10,"Vil","Villa-Pola de Laviana",3
+805,19,"Ovi","Oviedo-Grado [Autopista]",3
+835,31,"Pol","Pola de Laviana-Gijón [Autopista] [Plaza Europa]",3
+836,31,"Pol","Pola de Laviana-Gijón [Autopista] [Cabueñes] [Plaza Europa]",3
+837,31,"Pol","Pola de Laviana-Gijón [Autovía Minera] [Plaza Europa]",3
+838,31,"Pol","Pola de Laviana-Gijón [Autovía Minera] [Cabueñes] [Plaza Europa]",3
+839,31,"Pol","Pola de Laviana-Gijón [Autovía Minera] [Cabueñes]",3
+840,31,"Sam","Sama de Langreo-Gijón [Alto de La Madera]",3
+863,14,"Las","Lastres-Arriondas [Hospital]",3
+865,10,"Vil","Villa-Pola de Laviana [Búho]",3
+934,57,"Gij","Gijón-Pola de Lena (sin parada en El Caleyo)",2
+939,57,"Ovi","Oviedo-Pola de Lena",2
+945,57,"Gij","Gijón-Oviedo (CIVIS)",2
+951,19,"Lua","Luanco-Gijón [Candás] [Búho]",3
+952,19,"Gij","Gijón-Avilés [Búho]",3
+979,57,"El ","El Entrego-San Juan de Nieva",2
+981,57,"El ","El Entrego-San Juan de Nieva",2
+991,45,"Ovi","Oviedo-Iglesia de Limanes [Real Oviedo] [Villamiana]",3
+1504,57,"El ","El Entrego-Avilés",2
+1854,28,"Pie","Piedras Blancas-Piedras Blancas [Avilés] [Búho]",3
+1856,28,"Pie","Piedras Blancas-Los Campos [Búho]",3
+1870,19,"Lug","Lugo de Llanera-Polígonos [Lanzadera]",3
+1915,26,"Cor","Corias/Cangas del Narcea-Peñaforada",3
+1916,26,"Can","Cangas del Narcea-Villablino [Leitariegos]",3
+1917,26,"Vil","Villablino-Degaña [Cerredo]",3
+1919,26,"Vil","Villablino-Cangas del Narcea [Cerredo] [Degaña]",3
+1920,26,"Can","Cangas del Narcea-Sorrodiles",3
+1921,26,"Can","Cangas del Narcea-San Antolín de Ibias [Marentes]",3
+1922,26,"Lui","Luiña-Villablino",3
+1977,28,"L6 ","L6 - Entrevías-Hospital",3
+1978,28,"L11","L11 - Piedras Blancas-Hospital",3
+1979,28,"L17","L17 - San Juan-San Juan [Coto Carcedo]",3
+2055,10,"El ","El Entrego-San Julián de Bimenes [Rozadas]",3
+2126,19,"Vil","Villaviciosa-Cuatro Caminos",3
+2230,76,"Col","Collanzo-Casomera",3
+2231,76,"Col","Collanzo-Felechosa",3
+2232,45,"Ovi","Oviedo-La Mortera",3
+2233,45,"Tud","Tudela Veguín-La Mortera",3
+2246,28,"L17","L17 - Avilés-San Juan [Coto Carcedo]",3
+2249,28,"L17","L17 - Avilés-San Juan de Nieva",3
+2446,28,"L11","L11 - Vegarrozadas-Hospital",3
+2447,28,"L11","L11 - Chavolas-Hospital",3
+2451,28,"L11","L11 - Piedras Blancas-Hospital [Avenida El Campón]",3
+2463,16,"Gij","Gijón-Deva [Castiello]",3
+2464,16,"Gij","Gijón-Deva [Castiello] [Santurio]",3
+2509,27,"Tui","Tuilla-La Nueva",3
+2510,27,"Tui","Tuilla-Sama",3
+2511,27,"Sam","Sama-La Reguera",3
+2512,27,"La ","La Felguera-Casa de Abajo",3
+2513,27,"La ","La Felguera-La Nueva",3
+2515,27,"La ","La Nueva-Fresnosa",3
+2536,10,"Vil","Villa-El Entrego",3
+2537,59,"L3 ","L3 Mieres-Valdefarrucos [San Salvador]",3
+2593,38,"Ill","Illano-Navia [Hospital de Jarrio]",3
+2601,77,"Sam","Sama de Grado-Trubia [Bayo]",3
+2602,77,"Sam","Sama de Grado-Grado",3
+2603,77,"Gra","Grado-Bayo",3
+2604,77,"Gra","Grado-Trubia",3
+2605,77,"Yer","Yernes-Grado",3
+2637,19,"Lla","Llanes-Naves [Búho]",3
+2753,19,"Nav","Nava-Arriondas [Búho]",3
+2754,19,"Lla","Llanes-Arriondas [Búho]",3
+2758,10,"Sam","Sama-El Plano [La Camperona]",3
+2761,10,"Sam","Sama-El Plano [La Acebal]",3
+3012,79,"San","San Martín de Oscos-Vegadeo",3
+3013,79,"San","Santa Eulalia de Oscos-Vegadeo",3
+3014,79,"San","Santa Eulalia-Vegadeo",3
+3058,19,"Gij","Gijón-Aeropuerto [Avilés] [Castrillón]",3
+3059,59,"L3 ","L3 Mieres-Valdefarrucos [Santa Cruz]",3
+3063,59,"L4 ","L4 Mieres-El Padrún",3
+3065,59,"L1 ","L1 Mieres-San Andrés",3
+3099,59,"L3 ","L3 Mieres (P.Ayala) -Santa Cruz [La Reguerona]",3
+3100,59,"L3 ","L3 Mieres-Valdefarrucos [La Reguerona] [San Salvador]",3
+3101,59,"L15","L15 Mieres-Valdecuna [Servicios especiales]",3
+3103,59,"L12","L12 Apeadero RENFE-Campus Mieres",3
+3105,59,"L15","L15 San Andrés-Valdecuna [Servicios especiales]",3
+3113,59,"L1.","L1.1 San Andrés-La Hueria",3
+3263,59,"L14","L14 Mieres-Hospital",3
+3272,81,"Pos","Posada de Valdeón-Caín de Valdeón",3
+3275,19,"Ovi","Oviedo-Ribadeo [HUCA]",3
+3276,19,"Lua","Luanco-Oviedo [Candás] [HUCA]",3
+3277,19,"Ovi","Oviedo-Llanes [Autovía] [HUCA]",3
+3279,19,"Ovi","Oviedo-Cangas de Onís [Facultades] [HUCA]",3
+3280,19,"Ovi","Oviedo-Cangas de Onís [HUCA]",3
+3575,51,"A  ","A-CENTRO ASTURIANO-LLAMAQUIQUE",3
+3576,51,"B  ","B-FITORIA-OLIVARES",3
+3577,51,"C  ","C-FACULTADES-LUGONES",3
+3578,51,"D  ","D-FACULTADES-PARQUE PRINCIPADO",3
+3579,51,"E  ","E-LAS CAMPAS-LA MONXINA",3
+3580,51,"F  ","F-HUCA-NARANCO-CAMPILLIN-HUCA",3
+3581,51,"H  ","H-SERRANO-PARQUE PRINCIPADO",3
+3582,51,"J  ","J-OTERO-SAN CLAUDIO",3
+3583,51,"K  ","K-LATORES-PLAZA AMERICA",3
+3584,51,"L  ","L-SAN ANDRES-TUDELA VEGUIN",3
+3585,51,"M  ","M-PRIMO RIVERA-FARO-PRIMO RIVERA",3
+3586,51,"O  ","O-LUBRIO-PLAZA AMERICA",3
+3587,51,"G  ","G-PUERTO-MONTECERRAO",3
+3588,51,"BUH","BUHO SAN CLAUDIO-BUHO CUATRO CAÑOS",3
+3591,19,"Col","Colunga-Arriondas [Búho]",3
+3600,56,"L12","L12 - Avilés-Luanco [Vioño]",3
+3602,56,"Lua","Luanco-Bañugues",3
+3603,56,"L19","L19 - Avilés-Luanco [Tabiella] [Verdicio]",3
+3604,56,"L19","L19 - Avilés-Luanco [Verdicio] [Xagó]",3
+3605,56,"L19","L19 - Avilés-Luanco [Laviana] [Verdicio]",3
+3606,56,"Lua","Luanco-Verdicio",3
+3607,56,"L14","L14 - Avilés-Fondo Valliniello",3
+3608,56,"L14","L14 - Avilés-Fondo Valliniello [PEPA]",3
+3610,56,"L13","L13 - Avilés-Xagó",3
+3625,19,"Ovi","Oviedo-Pola de Siero [Consejerías] [HUCA]",3
+3630,19,"Ovi","Oviedo-Pola de Siero [Granda] [HUCA]",3
+3631,56,"Avi","Avilés-Luanco [Búho]",3
+3633,19,"Ovi","Oviedo-Grado [Autopista] [HUCA]",3
+3635,19,"Ovi","Oviedo-Cangas del Narcea [HUCA] [Tineo]",3
+3651,19,"Pos","Posada de Llanera-San Cucao",3
+3652,19,"Ven","Venta de Puga-Las Vegas",3
+3654,19,"Ven","Venta de Puga-Arlós",3
+3655,19,"Ven","Venta de Puga-Posada de Llanera",3
+3656,82,"Avi","Avilés-Grado",3
+3657,82,"Avi","Avilés-El Caliero",3
+3658,82,"Avi","Avilés-Grullos",3
+3659,82,"Gra","Grado-Sandiche",3
+3660,82,"Avi","Avilés-Llanavao",3
+3662,82,"Avi","Avilés-Grado [Illas]",3
+3663,82,"Avi","Avilés-Llanavao [Hospital San Agustín]",3
+3664,82,"Avi","Avilés-Grado [Hospital San Agustín] [El Llagarón]",3
+3665,82,"Avi","Avilés-Miranda",3
+3666,82,"Avi","Avilés-Grado [Hospital San Agustín] [La Callezuela]",3
+3676,19,"Pre","Premió-Oviedo [HUCA]",3
+3678,19,"Ovi","Oviedo-Posada de Llanera [Búho]",3
+3679,28,"L5 ","L5 - Avilés-Parque Astur",3
+3680,28,"L5 ","L5 - Avilés-Parque Astur [Balagares][Trasona]",3
+3681,28,"L5 ","L5 - Avilés-Parque Astur [Trasona]",3
+3682,28,"L1 ","L1 - Piedras Blancas-Avilés [Circular]",3
+3683,19,"Ovi","Oviedo-Nava [Búho]",3
+3690,19,"Vil","Villaviciosa-Tazones [Lanzadera Desembarco de Carlos V]",3
+3719,83,"La ","La Granja-Salas",3
+3720,83,"Mal","Mallecina-Pravia",3
+3721,83,"Sal","Salas-Pravia",3
+3722,83,"Val","Valderrodero-Mallecina",3
+3733,78,"La ","La Felguera de Noreña-Pola de Siero",3
+3735,78,"Nav","Nava-Gijón [Autovía Minera]",3
+3736,78,"Pol","Pola de Siero-Gijón [La Tabla]",3
+3737,78,"Pol","Pola de Siero-Gijón [Autovía Minera]",3
+3738,78,"Pol","Pola de Siero-Gijón [Búho]",3
+3739,78,"Veg","Vega-Vega [Lavandera]",3
+3741,56,"L13","L13 - Avilés-Xagó [Campo Ferrero] [Laviana]",3
+3749,56,"L15","L15 - Avilés-Parque Astur",3
+3752,56,"L16","L16 - Avilés-Candás [Parque Astur]",3
+3756,19,"Rib","Ribadesella-Naves [Búho]",3
+3757,56,"Lua","Luanco-Bañugues [Búho]",3
+3766,50,"Pol","Pola de Lena-Telledo",3
+3767,50,"Pol","Pola de Lena-Espinedo",3
+3769,50,"Mie","Mieres-Langreo [Santirso]",3
+3771,50,"Mie","Mieres-Langreo [Santo Emiliano]",3
+3772,50,"Mie","Mieres-Vegadotos",3
+3773,50,"Mie","Mieres-Rioturbio",3
+3774,50,"Mie","Mieres-Polio",3
+3775,50,"Car","Carabanzo-Pola de Lena",3
+3776,50,"Car","Carabanzo-Pola de Lena [Piedraceda]",3
+3777,50,"Ovi","Oviedo-Pola de Lena [Mieres]",3
+3778,50,"Ovi","Oviedo-Mieres [El Padrún]",3
+3779,50,"Pol","Pola de Lena-Campomanes",3
+3780,50,"Ovi","Oviedo-Mieres",3
+3781,50,"Ovi","Oviedo-Campomanes [HUCA] [Turnos]",3
+3782,50,"Ovi","Oviedo-Pola de Lena [Real Oviedo]",3
+3783,50,"Mie","Mieres-Pola de Lena",3
+3784,50,"Ovi","Oviedo-Mieres [Real Oviedo]",3
+3785,50,"Ovi","Oviedo-Pola de Lena [Olloniego]",3
+3786,50,"Ovi","Oviedo-Pola de Lena [Campus del Cristo]",3
+3788,50,"Ovi","Oviedo-Pola de Lena [HUCA]",3
+3801,50,"Car","Caranga de Abajo-Bárzana",3
+3802,50,"Bár","Bárzana-Santa Marina",3
+3803,50,"Ovi","Oviedo-Riosa [Estación]",3
+3804,50,"Ovi","Oviedo-Riosa [Real Oviedo]",3
+3805,50,"Ovi","Oviedo-Riosa [HUCA]",3
+3806,50,"San","Santa Eulalia-Peñerudes",3
+3807,50,"Pol","Pola de Lena-Riosa",3
+3808,50,"San","Santa Eulalia-Busloñe",3
+3809,50,"San","Santa Eulalia-Mieres",3
+3811,50,"Ovi","Oviedo-Teverga [Directo]",3
+3814,50,"Pal","Palomar-Soto de Ribera",3
+3815,50,"Pal","Palomar-Oviedo [HUCA]",3
+3816,50,"Lav","Lavarejos-Oviedo [HUCA]",3
+3818,50,"Peñ","Peñamiel-Riosa",3
+3819,50,"Ovi","Oviedo-Peñerudes",3
+3873,19,"Ovi","Oviedo-Guyame",3
+3878,19,"Vil","Villaviciosa-Rodiles [SERVICIO VERANO]",3
+3900,19,"Ovi","Oviedo-Infiesto [Búho]",3
+3901,19,"Inf","Infiesto-Cangas de Onís [Búho]",3
+3915,281,"Can","Candanal-Gijón [Quintes]",3
+3916,281,"Gij","Gijón-Quintueles [Circular]",3
+3932,50,"Ovi","Oviedo-Felechosa",3
+4010,50,"Ovi","Oviedo-Riosa [Búho]",3
+4013,50,"Mie","Mieres-Felechosa [Servicio Especial/Búho]",3
+4049,51,"U  ","U-TUDELA VEGÍN-SAN ESTEBAN",3
+4050,51,"V  ","V-VILLAPÉREZ-HUCA",3
+4084,56,"L21","L21 - Luanco-Avilés [Hospital San Agustin] [Vioño]",3
+4089,16,"Gij","Gijón-Valdornón",3
+4095,50,"Mie","Mieres-Campomanes",3
+4096,50,"Mie","Mieres-Felechosa",3
+4110,19,"Avi","Avilés-Navia [Cudillero]",3
+4111,19,"Cud","Cudillero-Avilés [Directo]",3
+4112,19,"Cru","Cruce Oviñana-Avilés [Directo]",3
+4113,19,"Avi","Avilés-Cruce de Oviñana [Directo]",3
+4119,19,"Arr","Arriondas-Panes [Arenas de Cabrales]",3
+4120,19,"Bus","Bustio-Panes [Directo Panes-Bustio] [Hospital] [Llanes]",3
+4121,19,"Luc","Luces-La Isla [SERVICIO VERANO]",3
+4122,19,"Pon","Poncebos-Sotres [Funicular]",3
+4127,19,"Pon","Poncebos-Cangas de Onís",3
+4128,19,"Ovi","Oviedo-Ribadeo [HUCA] [Semidirecto]",3
+4130,50,"Ovi","Oviedo-Pola de Lena [Directo]",3
+4148,19,"Lug","Lugo de Llanera-Posada de Llanera",3
+4149,59,"L8 ","L8 Mieres-Entrerríos",3
+4151,59,"L1.","L1.1 San Andrés-Urbiés",3
+4152,59,"L1 ","L1 San Andrés-Mieres [La Reguerona]",3
+4153,59,"L1.","L1.1 Hueria-Mieres [San Andrés]",3
+4158,19,"Ovi","Oviedo-Salas [Autopista]",3
+4165,14,"Bor","Borines-Infiesto",3
+4166,14,"Ana","Anayo-Infiesto",3
+4167,14,"San","Santa Eugenia-Villaviciosa",3
+4168,31,"Gij","Gijón-Gijón [Cabueñes] [Contrueces]",3
+4171,19,"Gij","Gijón-Avilés [Búho] [Viernes]",3
+4172,19,"Lua","Luanco-Gijón [Candás] [Búho] [Viernes]",3
+4175,19,"Sie","Siejo-Llanes [Panes] [IES Llanes]",3
+4177,19,"Veg","Vegadeo-Luarca",3
+4178,59,"Mie","Mieres-San Andrés [Curuxa]",3
+4179,59,"Mie","Mieres-Valdefarrucos [Curuxa]",3
+4180,59,"Mie","Mieres-Rioturbio [Curuxa]",3
+4185,725,"011","011-061 Dagüeño-Esc. Bruelles (CRA Santarbás)",3
+4186,19,"Can","Cangas de Onís-Bustio [Arenas de Cabrales]",3
+4187,19,"Gij","Gijón-Panes [Cabueñes] [Arriondas]",3
+4188,19,"Are","Arenas de Cabrales-Panes",3
+4190,53,"Sot","Sotrondio-Santa Bárbara  [Servicio Especial] [BÚHO]",3
+4197,19,"Lua","Luarca-Busto [Mercado]",3
+4201,31,"La ","La Felguera-Gijón [Autovía Minera] [Plaza Europa]",3
+4204,19,"Gra","Grado-Pola de Somiedo",3
+4205,31,"Pol","Pola de Laviana-Gijón [Plaza Europa] [Cabueñes] [Autopista]",3
+4213,56,"L15","L15 - Avilés-Parque Astur [Directo]",3
+4219,53,"Sot","Sotrondio-Santa Bárbara",3
+4226,13,"Pri","Priede-Infiesto",3
+4228,13,"El ","El Pico-Infiesto [La Trocha]",3
+4229,731,"070","070-017 Bargaz-Enlace IES Marqués de Casariego",3
+4234,734,"008","008-004 Berodia-CPEB Las Arenas",3
+4235,51,"C  ","C-JULIAN CLAVERIA-LUGONES",3
+4243,50,"Lan","Langreo-Lada [Búho]",3
+4270,53,"Ovi","Oviedo-Sama [Torre de Abajo] [Búho]",3
+4282,53,"Ovi","Oviedo-Pola de Laviana [Estación] [Túneles de Riaño]",3
+4283,53,"Ovi","Oviedo-Pola de Laviana [Estación] [HUCA] [Muñiz Toca] [Túneles de Riaño]",3
+4284,53,"Ovi","Oviedo-Pola de Laviana [Estación] [HUCA] [Túneles de Riaño]",3
+4285,53,"Ovi","Oviedo-Pola de Laviana [HUCA] [Túneles de Riaño]",3
+4287,53,"Ovi","Oviedo-Pola de Laviana [Campus del Cristo]",3
+4290,53,"Ovi","Oviedo-Sama [Olloniego]",3
+4291,53,"Ovi","Oviedo-Pola de Laviana [Olloniego]",3
+4292,53,"Ovi","Oviedo-Pola de Laviana [HUCA] [Olloniego]",3
+4295,53,"Ovi","Oviedo-Pola de Laviana [Anieves] [Tudela Agüeria]",3
+4300,53,"Pol","Pola de Laviana-La Pontonciella",3
+4302,53,"Pol","Pola de Laviana-La Foz",3
+4303,53,"Pol","Pola de Laviana-Tarna",3
+4305,53,"Pol","Pola de Laviana-Soto de Agues",3
+4306,53,"Pol","Pola de Laviana-Navaliego",3
+4307,53,"Pol","Pola de Laviana-Tolivia",3
+4308,53,"Pol","Pola de Laviana-Quintanas [Meruxal]",3
+4309,53,"Pol","Pola de Laviana-Ordaliego",3
+4310,53,"Pol","Pola de Laviana-La Ferrera",3
+4311,53,"Pol","Pola de Laviana-Les Bories",3
+4312,53,"Pol","Pola de Laviana-La Acebal",3
+4313,53,"Pol","Pola de Laviana-Rioseco",3
+4316,78,"Pol","Pola de Siero-Gijón [DIRECTO]",3
+4318,19,"Ovi","Oviedo-Cangas de Onís [HUCA] [Real Oviedo]",3
+4319,19,"Ovi","Oviedo-Cangas de Onís [Real Oviedo] [Semidirecto] [AVE]",3
+4320,19,"Ovi","Oviedo-Cangas de Onís [HUCA] [Real Oviedo] [Semidirecto]",3
+4321,281,"Gij","Gijón-Quintes [Especial DIURNO]",3
+4322,281,"Gij","Gijón-Quintes [Especial NOCTURNO]",3
+4325,56,"Lua","Luanco-Verdicio [Búho]",3
+4326,78,"El ","El Berrón-Gijón [Pola de Siero] [Campus Viesques] [Universidad Laboral]",3
+4328,19,"El ","El Bosque-Lagos [Lanzadera Plan Lagos]",3
+4329,19,"Muñ","Muñigo-Lagos [Lanzadera Plan Lagos]",3
+4373,19,"Ovi","Oviedo-Lugo de Llanera [Búho]",3
+4376,19,"Ovi","Oviedo-Vegadeo [Express] [HUCA]",3
+4377,19,"Ovi","Oviedo-Cangas del Narcea [Express] [Tineo]",3
+4378,19,"Ovi","Oviedo-Cangas de Onís [Express] [HUCA] [Directo]",3
+4379,19,"Ovi","Oviedo-Llanes [Autovía] [Express] [HUCA]",3
+4380,19,"Ovi","Oviedo-Cangas de Onís [Express] [Directo]",3
+4381,50,"Ovi","Oviedo-Mieres [Búho]",3
+4382,10,"Vil","Villa-Ciaño",3
+4383,10,"Cia","Ciaño-Pola de Laviana",3
+4387,31,"Pol","Pola de Laviana-Gijón [Autovía Minera] [Plaza Europa] [Directo]",3
+4388,31,"El ","El Entrego-Gijón [Autovía Minera] [Plaza Europa]",3
+4393,53,"Pol","Pola de Laviana-Mieres [AVE] [Express] [Minera]",3
+4394,53,"Ovi","Oviedo-Pola de Laviana [AVE] [Express]",3
+4397,59,"L3 ","L3 Mieres (P.Ayala)-Santa Cruz",3
+4399,19,"Pue","Puerto Cudillero-Parking Campo Futbol [Lanzadera]",3
+4401,19,"Pol","Pola de Somiedo-Saliencia [SERVICIO VERANO]",3
+4402,19,"Pol","Pola de Somiedo-Valle del Lago [SERVICIO VERANO]",3
+4403,19,"Veg","Vegadeo-Tapia [SERVICIO VERANO]",3
+4405,19,"Gij","Gijón-Ribadesella [Express]",3
+4406,53,"Pol","Pola de Laviana-Caleao",3
+4407,19,"Can","Cangas de Onís-Cangas de Onís [Viego] [SERVICIO VERANO]",3
+4410,19,"Ovi","Oviedo-Salas [AVE] [Express]",3
+4411,19,"Ovi","Oviedo-Villaviciosa [AVE] [Express]",3
+4412,19,"Ovi","Oviedo-Cangas del Narcea [AVE] [Express] [Tineo]",3
+4413,19,"Ovi","Oviedo-Ribadeo [AVE] [Express]",3
+4414,19,"Ovi","Oviedo-Llanes [AVE] [Express]",3
+4415,19,"Avi","Avilés-Ribadeo [AVE] [Express]",3
+4416,50,"Ovi","Oviedo-Pola de Lena [AVE] [Mieres]",3
+4417,50,"Mie","Mieres-Felechosa [AVE]",3
+4418,10,"Sam","Sama-San Julián de Bimenes [La Camperona]",3
+4420,31,"La ","La Felguera-Gijón  [Búho]",3
+4468,31,"Sam","Sama de Langreo-Gijón [Autovía Minera] [Plaza Europa]",3
+4477,82,"Avi","Avilés-Miranda [Carriona]",3
+4481,50,"Ovi","Oviedo-Riosa [Express] [HUCA]",3
+4483,774,"Lug","Lugones-Pola de Siero [La Fresneda] [Búho]",3
+4484,774,"Ovi","Oviedo-Soto de Llanera [La Fresneda] [Búho]",3
+4486,774,"La ","La Fresneda-Parque Principado [Lugones]",3
+4489,774,"Ovi","Oviedo-La Fresneda, por Autopista",3
+4490,774,"Ovi","Oviedo-La Fresneda [Autopista] [HUCA] [CC Azabache] [La Gruta]",3
+4491,774,"Ovi","Oviedo-La Fresneda [Autopista] [CC Azabache] [Real Oviedo]",3
+4492,774,"Ovi","Oviedo-La Fresneda [Autopista] [Plaza América]",3
+4493,774,"Ovi","Oviedo-La Fresneda, por Autopista",3
+4494,774,"Ovi","Oviedo-La Fresneda [CC Azabache] [La Gruta] [Lugones]",3
+4495,774,"Ovi","Oviedo-La Fresneda [CC Azabache] [Estación] [Lugones]",3
+4497,774,"Ovi","Oviedo-Pola de Siero [La Gruta] [Noreña]",3
+4498,774,"Ovi","Oviedo-Pola de Siero [La Fresneda] [La Gruta] [Noreña]",3
+4500,774,"Ovi","Oviedo-Pola de Siero [Estación] [Noreña]",3
+4501,774,"Ovi","Oviedo-Pola de Siero [La Fresneda] [Noreña] [Real Oviedo]",3
+4502,774,"Ovi","Oviedo-Pola de Siero [Noreña] [Plaza América]",3
+4503,774,"Ovi","Oviedo-Pola de Siero [Estación] [La Fresneda] [Noreña]",3
+4504,774,"Ovi","Oviedo-Pola de Siero [Noreña] [Real Oviedo]",3
+4505,774,"Ovi","Oviedo-Pola de Siero [Amazon] [Estación] [Noreña]",3
+4506,774,"Bob","Bobes-Pola de Siero [Amazon] [Noreña]",3
+4507,774,"Ovi","Oviedo-Pola de Siero [Amazon] [Noreña] [Real Oviedo]",3
+4508,774,"Ovi","Oviedo-Bobes [Amazon] [Real Oviedo]",3
+4509,774,"Ovi","Oviedo-Pola de Siero [Amazon] [Noreña] [Plaza América]",3
+4510,774,"Ovi","Oviedo-Pola de Siero [Amazon] [La Gruta] [Noreña]",3
+4511,774,"Ovi","Oviedo-Soto de Llanera [Campus del Cristo]",3
+4512,774,"Ovi","Oviedo-Soto de Llanera [Campus del Cristo] [HUCA]",3
+4513,774,"Ovi","Oviedo-Soto de Llanera [HUCA] [Real Oviedo]",3
+4515,774,"Pol","Pola de Siero-Infiesto",3
+4516,774,"Pol","Pola de Siero-San Román de Sariego [Directo] [La Secada]",3
+4517,774,"Pol","Pola de Siero-Villaviciosa",3
+4526,774,"Pol","Pola de Siero-San Román de Sariego",3
+4535,48,"Gra","Grado-Playa de Aguilar [SERVICIO VERANO]",3
+4536,19,"Gij","Gijón-Villaviciosa [Gobernador] [Búho]",3
+4537,19,"Ovi","Oviedo-Rodiles [SERVICIO VERANO]",3
+4538,19,"Ovi","Oviedo-Villaviciosa [Express]",3
+4539,19,"Vil","Villaviciosa-Tazones [SERVICIO VERANO]",3
+4540,19,"Gij","Gijón-Avilés [DIA]",3
+4541,19,"Gij","Gijón-Avilés [NOCHE]",3
+4544,19,"Pol","Pola de Somiedo-Villar de Vildas [SERVICIO VERANO]",3
+4545,19,"Pol","Pola de Somiedo-El Puerto [SERVICIO VERANO]",3
+4546,19,"Can","Cangas de Onís-Ribadesella [SERVICIO VERANO]",3
+4547,19,"San","San Esteban-Playa de Aguilar [SERVICIO VERANO]",3
+4548,50,"Ovi","Oviedo-Museo Prehistoria [SERVICIO VERANO]",3
+4549,19,"Nue","Nueva de Llanes-Nueva de Llanes [Posada] [Meré] [SERVICIO VERANO] [Circular]",3
+4550,19,"Lla","Llanes-Llanes [SERVICIO VERANO] [Circular]",3
+4551,32,"Tar","Taramundi-Bres  [SERVICIO VERANO]",3
+4552,32,"Tar","Taramundi-Os Teixois  [SERVICIO VERANO]",3
+4555,32,"Veg","Vegadeo-Taramundi [Búho]",3
+4558,19,"Rib","Ribadeo-Tapia de Casariego [Búho]",3
+4559,28,"L1 ","L1 Villalegre-Avilés [RENFE]",3
+4562,19,"Ovi","Oviedo-Cangas de Onís [Facultades] [Semidirecto]",3
+4564,19,"Ovi","Oviedo-Avilés [Autopista]",3
+4565,19,"Ovi","Oviedo-Avilés [AVE] [Express]",3
+4566,19,"Ovi","Oviedo-Gijón [Paradas]",3
+4567,19,"Ovi","Oviedo-Gijón [Autopista]",3
+4570,19,"Gij","Gijón-Fuentes de Invierno",3
+4571,19,"Ovi","Oviedo-Gijón [HUCA] [Turnos]",3
+4572,19,"Ovi","Oviedo-Piedras Blancas [HUCA] [Turnos]",3
+4573,19,"Ovi","Oviedo-Aviles [HUCA] [Turnos]",3
+4574,19,"Mie","Mieres-Gijón [Autovía Minera]",3
+4575,19,"Mie","Mieres-Gijón [Autovía Minera] [Campus]",3
+4576,19,"Ovi","Oviedo-Gijón [Búho]",3
+4577,19,"Ovi","Oviedo-Gijón [Búho] [Viernes]",3
+4578,19,"Avi","Avilés-Oviedo [Búho]",3
+4579,19,"Avi","Avilés-Oviedo [Búho] [Viernes]",3
+4580,19,"Pie","Piedras Blancas-Oviedo [AO2] [Campus del Cristo] [Consejerías]",3
+4582,19,"Gij","Gijón-Oviedo [GO2] [Campus del Cristo] [Consejerías] [Viesques]",3
+4583,19,"Gij","Gijón-Oviedo [GO2] [Campus del Cristo] [Consejerías] [Somió]",3
+4585,19,"Gij","Gijón-Oviedo [GO2] [Campus del Cristo] [Consejerías] [Foro] [Somió]",3
+4586,19,"Gij","Gijón-Oviedo [OG2] [Campus del Cristo] [Consejerías] [Somió]",3
+4590,19,"Gij","Gijón-Oviedo [OG2] [Campus del Cristo] [Consejerías] [Viesques]",3
+4591,19,"Gij","Gijón -Estación de Valgrande",3
+4592,19,"Gij","Gijón-Oviedo [GO1] [Campus del Cristo] [Universidad Laboral]",3
+4593,19,"Gij","Gijón-Oviedo [GO1] [Campus del Cristo] [Ezcurdia]",3
+4596,19,"Gij","Gijón-Oviedo [GO1] [C.C. Costa Verde] [Campus del Cristo]",3
+4598,19,"Gij","Gijón-Oviedo [GO1] [Consejerias] [Ezcurdia]",3
+4599,19,"Gij","Gijón-Oviedo [GO4] [Campus del Cristo] [Consejerías] [La Calzada]",3
+4600,19,"Gij","Gijón-Oviedo [GO5] [Campus del Cristo] [Nuevo Roces] [Viesques]",3
+4601,19,"Ovi","Oviedo-Gijón [OG3] [Fuertes Acevedo] [Campus Viesques] [Universidad Laboral]",3
+4605,19,"Ovi","Oviedo-Posada [Paradas]",3
+4606,19,"Ovi","Oviedo-Avilés [Paradas]",3
+4609,19,"Los","Los Campos-Gijón [AG1] [Campus Viesques] [Universidad Laboral]",3
+4610,19,"Avi","Avilés-Gijón [AG2] [Campus Viesques] [Universidad Laboral] [Cabueñes]",3
+4611,19,"Pie","Piedras Blancas-Gijón [AG1] [Campus Viesques] [Universidad Laboral]",3
+4623,19,"Avi","Avilés-Oviedo [AO1] [Campus del Cristo]",3
+4624,19,"Pie","Piedras Blancas-Oviedo [AO1] [Campus del Cristo]",3
+4626,19,"Pra","Pravia-Oviedo [AVE] [Express]",3
+4628,19,"Ovi","Oviedo-Gijón [HUCA] [Las Mestas] [Centro Bus]",3
+4630,19,"Gij","Gijón-Pajares",3
+4631,19,"Sot","Sotiello-Gijón [Porceyo]",3
+4640,19,"Pra","Pravia-Oviedo [Piedras Blancas] [Campus del Cristo]",3
+4643,19,"Gij","Gijón-Oviedo [DIA]",3
+4644,19,"Gij","Gijón-Oviedo [NOCHE]",3
+4645,19,"Ovi","Oviedo-Pola de Siero [Facultades] [Huca]",3
+4648,53,"Pol","Pola de Laviana-El Condado [Búho]",3
+4649,53,"Pol","Pola de Laviana-Tiraña [Búho]",3
+4650,53,"Pol","Pola de Laviana-Tolivia [Búho]",3
+4651,53,"Pol","Pola de Laviana-Tiraña [ESPECIAL DIURNO]",3
+4652,53,"Pol","Pola de Laviana-Tolivia [ESPECIAL DIURNO]",3
+4654,19,"Lua","Luarca-Trevías [Cadavedo]Mercado]",3

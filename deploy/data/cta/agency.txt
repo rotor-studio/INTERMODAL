@@ -1,0 +1,42 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone
+1,Consorcio de Transportes de Asturias (CTA),https://www.ctaconecta.com,Europe/Madrid,es,0034985203974
+9,Asturiana de Turismo SA,http://www.autos-sama.com,Europe/Madrid,es,0034985162395
+10,Autobuses de Langreo SL,http://www.autobusesdelangreo.es,Europe/Madrid,es,0034985610842
+12,Autobuses de Tineo SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034618948133 
+13,Autocares Cabranes SL,http://www.autocarescabranes.com,Europe/Madrid,es,0034985166090
+14,Autocares Costa Verde SA,http://www.consorcioasturias.com,Europe/Madrid,es,0034985856102
+16,Autocares Medina SL,http://www.autocaresmedina.com,Europe/Madrid,es,0034985168208
+18,Automóviles Garrido SL,http://www.garrido.net,Europe/Madrid,es,0034985275749
+19,Automóviles Luarca SAU,http://www.alsa.es,Europe/Madrid,es,0034985969600
+20,Autos Jano SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985784115
+23,Autos Río Negro SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985482003
+24,Autos Sama SA,http://www.autos-sama.com,Europe/Madrid,es,0034985387313
+25,Autos Xavina SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985355096
+26,Busnarcea SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985813939
+27,Dimas Coalla Rodríguez,http://www.consorcioasturias.com,Europe/Madrid,es,0034619 306 008
+28,Compañía del Tranvía Eléctrico de Avilés SA,http://www.tranviaaviles.es,Europe/Madrid,es,0034985561154
+31,Consorcio Autos Sama - Autocares Mariano,http://www.consorcioasturias.com,Europe/Madrid,es,0034985162395
+32,Empresa Acebras Rico SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034608988340
+38,Luarca Bus SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034982222900
+41,José Manuel Fernández SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985977872
+45,Rotratour SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034902361950
+48,Autocares Corias SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985834523
+50,Transportes Bimenes SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034660672520 Borja
+51,Transportes Unidos de Asturias SL,http://www.tua.es,Europe/Madrid,es,0034985969628
+53,Transportes Zapico SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985610842
+55,Viajes Camás SLU,http://www.consorcioasturias.com,Europe/Madrid,es,0034985923713
+56,Villa Excursiones SA,http://www.consorcioasturias.com,Europe/Madrid,es,0034985562311
+57,RENFE,http://www.renfe.es,Europe/Madrid,es,0034912320320
+59,EMUTSA,http://www.ayto-mieres.es,Europe/Madrid,es,0034985456644
+76,Pérez Rodríguez El Cartero SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034984280245
+77,Autocares Jesús Manuel Álvarez Álvarez SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985751203
+78,Autocares Mariano SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985174700
+79,Ibias Tours SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985635454
+81,Autocares de Castilla León SA (Calecar),http://www.consorcioasturias.com,Europe/Madrid,es, 
+82,Casablanca Bus SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034902361950
+83,Autos Mallecina SL,http://www.consorcioasturias.com,Europe/Madrid,es,0034985752232
+281,Pedro Pablo Álvarez García SLU,http://www.consorcioasturias.com,Europe/Madrid,es,0034985174700
+725,Oscar Barrera Pérez,http://www.consorcioasturias.com,Europe/Madrid,es,0034660689305
+731,María del Pilar Rico López,http://www.consorcioasturias.com,Europe/Madrid,es,0034629515252
+734,Pablo Mier Fernández,http://www.consorcioasturias.com,Europe/Madrid,es,0034669063506
+774,La Fresneda 2025 UTE,http://www.consorcioasturias.com,Europe/Madrid,es,0034985890761

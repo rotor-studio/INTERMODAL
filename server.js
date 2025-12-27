@@ -11,6 +11,7 @@ const BICI_PARKING_BASE = "https://observa.gijon.es/api/v2/catalog/datasets/apar
 const BICI_AREA_ID = "cggl7m2hi4pr8tm5lhgg";
 const GUPPY_BASE = "https://api.guppy.es/api/v2";
 const GUPPY_BBOX = { minLon: -7.6, minLat: 42.5, maxLon: -4.5, maxLat: 44.2 };
+const CTA_DIR = join(process.cwd(), "data/cta");
 const LOG_DIR = join(process.cwd(), "logs");
 const LOG_FILE = join(LOG_DIR, "movement-log.txt");
 
@@ -30,6 +31,9 @@ let biciParkingCache = null;
 let biciParkingExpiry = 0;
 let guppyCache = null;
 let guppyExpiry = 0;
+let ctaRoutesCache = null;
+let ctaStopsCache = null;
+let ctaRouteStopsCache = null;
 
 const CONTENT_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -430,6 +434,231 @@ async function readRequestBody(req) {
   });
 }
 
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let field = "";
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    const next = text[i + 1];
+    if (char === "\"") {
+      if (inQuotes && next === "\"") {
+        field += "\"";
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if (char === "," && !inQuotes) {
+      row.push(field);
+      field = "";
+      continue;
+    }
+    if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && next === "\n") i += 1;
+      row.push(field);
+      if (row.length > 1 || row[0] !== "") {
+        rows.push(row);
+      }
+      row = [];
+      field = "";
+      continue;
+    }
+    field += char;
+  }
+  if (field.length || row.length) {
+    row.push(field);
+    rows.push(row);
+  }
+  if (!rows.length) return [];
+  const headers = rows.shift().map((h) => h.trim());
+  return rows.map((cols) => {
+    const obj = {};
+    headers.forEach((h, idx) => {
+      obj[h] = cols[idx] ?? "";
+    });
+    return obj;
+  });
+}
+
+async function buildCtaRoutesGeo() {
+  if (ctaRoutesCache) return ctaRoutesCache;
+  const routesText = await readFile(join(CTA_DIR, "routes.txt"), "utf8");
+  const tripsText = await readFile(join(CTA_DIR, "trips.txt"), "utf8");
+  const shapesText = await readFile(join(CTA_DIR, "shapes.txt"), "utf8");
+
+  const routes = parseCsv(routesText);
+  const trips = parseCsv(tripsText);
+  const shapes = parseCsv(shapesText);
+
+  const routeShape = new Map();
+  trips.forEach((trip) => {
+    const routeId = trip.route_id;
+    if (!routeId || routeShape.has(routeId)) return;
+    if (trip.shape_id) routeShape.set(routeId, trip.shape_id);
+  });
+
+  const shapePoints = new Map();
+  shapes.forEach((shape) => {
+    const shapeId = shape.shape_id;
+    if (!shapeId) return;
+    const lat = Number(shape.shape_pt_lat);
+    const lon = Number(shape.shape_pt_lon);
+    const seq = Number(shape.shape_pt_sequence);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+    if (!shapePoints.has(shapeId)) shapePoints.set(shapeId, []);
+    shapePoints.get(shapeId).push({ lat, lon, seq });
+  });
+
+  const output = {
+    updated: new Date().toISOString(),
+    routes: [],
+  };
+
+  routes.forEach((route) => {
+    const routeId = route.route_id;
+    if (!routeId) return;
+    const shapeId = routeShape.get(routeId);
+    if (!shapeId || !shapePoints.has(shapeId)) return;
+    const points = shapePoints
+      .get(shapeId)
+      .slice()
+      .sort((a, b) => a.seq - b.seq)
+      .map((p) => [p.lat, p.lon]);
+    if (points.length < 2) return;
+    const color = route.route_color ? `#${route.route_color}` : "#0b7285";
+    output.routes.push({
+      id: routeId,
+      shortName: route.route_short_name || "",
+      longName: route.route_long_name || "",
+      color,
+      coords: points,
+    });
+  });
+
+  ctaRoutesCache = output;
+  return output;
+}
+
+async function buildCtaStops() {
+  if (ctaStopsCache) return ctaStopsCache;
+  const routesText = await readFile(join(CTA_DIR, "routes.txt"), "utf8");
+  const tripsText = await readFile(join(CTA_DIR, "trips.txt"), "utf8");
+  const stopsText = await readFile(join(CTA_DIR, "stops.txt"), "utf8");
+  const stopTimesText = await readFile(join(CTA_DIR, "stop_times.txt"), "utf8");
+
+  const routes = parseCsv(routesText);
+  const trips = parseCsv(tripsText);
+  const stops = parseCsv(stopsText);
+  const stopTimes = parseCsv(stopTimesText);
+
+  const tripRoute = new Map();
+  trips.forEach((trip) => {
+    if (trip.trip_id && trip.route_id) {
+      tripRoute.set(trip.trip_id, trip.route_id);
+    }
+  });
+
+  const stopRoutes = new Map();
+  stopTimes.forEach((st) => {
+    const tripId = st.trip_id;
+    const stopId = st.stop_id;
+    const routeId = tripRoute.get(tripId);
+    if (!routeId || !stopId) return;
+    if (!stopRoutes.has(stopId)) stopRoutes.set(stopId, new Set());
+    stopRoutes.get(stopId).add(routeId);
+  });
+
+  const routesMeta = new Map();
+  routes.forEach((route) => {
+    if (!route.route_id) return;
+    routesMeta.set(route.route_id, {
+      id: route.route_id,
+      shortName: route.route_short_name || "",
+      longName: route.route_long_name || "",
+      color: route.route_color ? `#${route.route_color}` : "#0b7285",
+    });
+  });
+
+  const outputStops = stops.map((stop) => ({
+    id: stop.stop_id,
+    name: stop.stop_name || "",
+    desc: stop.stop_desc || "",
+    lat: Number(stop.stop_lat),
+    lon: Number(stop.stop_lon),
+    routeIds: Array.from(stopRoutes.get(stop.stop_id) || []),
+  }));
+
+  const output = {
+    updated: new Date().toISOString(),
+    routes: Array.from(routesMeta.values()),
+    stops: outputStops,
+  };
+  ctaStopsCache = output;
+  return output;
+}
+
+async function buildCtaRouteStops() {
+  if (ctaRouteStopsCache) return ctaRouteStopsCache;
+  const tripsText = await readFile(join(CTA_DIR, "trips.txt"), "utf8");
+  const stopsText = await readFile(join(CTA_DIR, "stops.txt"), "utf8");
+  const stopTimesText = await readFile(join(CTA_DIR, "stop_times.txt"), "utf8");
+
+  const trips = parseCsv(tripsText);
+  const stops = parseCsv(stopsText);
+  const stopTimes = parseCsv(stopTimesText);
+
+  const stopMeta = new Map();
+  stops.forEach((stop) => {
+    if (!stop.stop_id) return;
+    stopMeta.set(stop.stop_id, {
+      id: stop.stop_id,
+      name: stop.stop_name || "",
+      desc: stop.stop_desc || "",
+      lat: Number(stop.stop_lat),
+      lon: Number(stop.stop_lon),
+    });
+  });
+
+  const routeTrip = new Map();
+  trips.forEach((trip) => {
+    if (!trip.route_id || !trip.trip_id) return;
+    if (!routeTrip.has(trip.route_id)) {
+      routeTrip.set(trip.route_id, trip.trip_id);
+    }
+  });
+
+  const tripStops = new Map();
+  stopTimes.forEach((st) => {
+    const tripId = st.trip_id;
+    const stopId = st.stop_id;
+    if (!tripId || !stopId) return;
+    const seq = Number(st.stop_sequence);
+    if (!tripStops.has(tripId)) tripStops.set(tripId, []);
+    tripStops.get(tripId).push({ stopId, seq });
+  });
+
+  const routeStops = new Map();
+  for (const [routeId, tripId] of routeTrip.entries()) {
+    const entries = (tripStops.get(tripId) || []).slice().sort((a, b) => a.seq - b.seq);
+    const list = [];
+    const seen = new Set();
+    entries.forEach((entry) => {
+      if (seen.has(entry.stopId)) return;
+      const meta = stopMeta.get(entry.stopId);
+      if (!meta) return;
+      seen.add(entry.stopId);
+      list.push({ ...meta, sequence: entry.seq });
+    });
+    routeStops.set(routeId, list);
+  }
+
+  ctaRouteStopsCache = routeStops;
+  return ctaRouteStopsCache;
+}
+
 const server = http.createServer(async (req, res) => {
   if (!req.url) {
     res.writeHead(400, { "content-type": "text/plain; charset=utf-8" });
@@ -605,6 +834,59 @@ const server = http.createServer(async (req, res) => {
       "cache-control": "no-store",
     });
     res.end(JSON.stringify(data));
+    return;
+  }
+
+  if (req.url.startsWith("/api/cta/routes-geo")) {
+    try {
+      const data = await buildCtaRoutesGeo();
+      res.writeHead(200, {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=21600",
+      });
+      res.end(JSON.stringify(data));
+    } catch (err) {
+      res.writeHead(502, { "content-type": "application/json" });
+      res.end(JSON.stringify({ error: "CTA routes failed" }));
+    }
+    return;
+  }
+
+  if (req.url.startsWith("/api/cta/stops")) {
+    try {
+      const data = await buildCtaStops();
+      res.writeHead(200, {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=21600",
+      });
+      res.end(JSON.stringify(data));
+    } catch (err) {
+      res.writeHead(502, { "content-type": "application/json" });
+      res.end(JSON.stringify({ error: "CTA stops failed" }));
+    }
+    return;
+  }
+
+  if (req.url.startsWith("/api/cta/route-stops")) {
+    try {
+      const requestUrl = new URL(req.url, `http://localhost:${PORT}`);
+      const routeId = requestUrl.searchParams.get("route");
+      if (!routeId) {
+        res.writeHead(400, { "content-type": "application/json" });
+        res.end(JSON.stringify({ error: "Missing route" }));
+        return;
+      }
+      const routeStops = await buildCtaRouteStops();
+      const stops = routeStops.get(routeId) || [];
+      res.writeHead(200, {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=21600",
+      });
+      res.end(JSON.stringify({ routeId, stops }));
+    } catch (err) {
+      res.writeHead(502, { "content-type": "application/json" });
+      res.end(JSON.stringify({ error: "CTA route stops failed" }));
+    }
     return;
   }
 

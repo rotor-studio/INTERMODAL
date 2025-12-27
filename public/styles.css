@@ -304,6 +304,43 @@ main {
   min-height: 90px;
 }
 
+.cta-stop-card {
+  margin-top: 12px;
+}
+
+.cta-line-block {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #e1d7cd;
+}
+
+.cta-line-name {
+  font-weight: 700;
+  color: #364fc7;
+  margin-bottom: 4px;
+}
+
+.cta-line-stops {
+  color: #5f4b43;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.cta-stop-chip {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: #f1f3ff;
+  border: 1px solid #d8dcff;
+  color: #303f9f;
+  margin: 2px 0;
+}
+
+.cta-stop-sep {
+  color: #9c8a7f;
+  padding: 0 4px;
+}
+
 .train-card .title {
   display: flex;
   align-items: center;
@@ -373,6 +410,14 @@ main {
     0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
+.marker-wrap.marker-selected .marker {
+  box-shadow:
+    0 0 0 3px rgba(54, 79, 199, 0.35),
+    0 0 12px rgba(54, 79, 199, 0.6),
+    0 6px 14px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
 .marker-alert {
   position: absolute;
   top: -18px;
@@ -414,6 +459,14 @@ main {
 }
 
 .marker-bus-stop {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.marker-cta-stop {
   width: 18px;
   height: 18px;
   border-radius: 6px;

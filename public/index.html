@@ -72,12 +72,12 @@
                 <button class="btn" id="bus-lines-all" type="button">Todas</button>
                 <button class="btn ghost" id="bus-lines-none" type="button">Ninguna</button>
               </div>
-              <details class="accordion" open>
+              <details class="accordion">
                 <summary>Lineas EMTUSA</summary>
                 <div class="legend" id="bus-lines-legend"></div>
               </details>
               <label class="toggle">
-                <input type="checkbox" id="bus-lines-toggle" checked />
+                <input type="checkbox" id="bus-lines-toggle" />
                 <span>Mostrar lineas</span>
                 <span class="chip" id="bus-lines-count">0</span>
               </label>
@@ -87,7 +87,7 @@
                 <span class="chip" id="bus-count">0</span>
               </label>
               <label class="toggle">
-                <input type="checkbox" id="bus-stops-toggle" checked />
+                <input type="checkbox" id="bus-stops-toggle" />
                 <span>Mostrar paradas</span>
                 <span class="chip" id="bus-stops-count">0</span>
               </label>
@@ -104,20 +104,49 @@
                 <div class="empty">Haz click en una parada del mapa.</div>
               </div>
             </div>
+            <div class="panel-section">
+              <h2>CTA Asturias</h2>
+              <p>Rutas GTFS estaticas (sin tiempo real).</p>
+              <input id="cta-stop-search" class="select" placeholder="Buscar parada CTA" />
+              <select id="cta-stop-select" class="select">
+                <option value="">Elige una parada CTA</option>
+              </select>
+              <div class="panel-actions">
+                <button class="btn" id="cta-lines-all" type="button">Todas</button>
+                <button class="btn ghost" id="cta-lines-none" type="button">Ninguna</button>
+              </div>
+              <details class="accordion">
+                <summary>Lineas CTA</summary>
+                <div class="legend" id="cta-lines-legend"></div>
+              </details>
+              <label class="toggle">
+                <input type="checkbox" id="cta-routes-toggle" />
+                <span>Mostrar rutas CTA</span>
+                <span class="chip" id="cta-routes-count">0</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="cta-stops-toggle" />
+                <span>Mostrar paradas CTA</span>
+                <span class="chip" id="cta-stops-count">0</span>
+              </label>
+              <div class="train-card cta-stop-card" id="cta-stop-card">
+                <div class="empty">Haz click en una parada CTA.</div>
+              </div>
+            </div>
           </div>
           <div class="panel-pane" id="panel-bike">
             <div class="panel-section">
               <h2>Gijon Bici</h2>
               <p>Estaciones y disponibilidad en tiempo real.</p>
               <label class="toggle">
-                <input type="checkbox" id="bike-toggle" checked />
+                <input type="checkbox" id="bike-toggle" />
                 <span>Mostrar estaciones</span>
                 <span class="chip" id="bike-count">0</span>
               </label>
               <h2>Infraestructura bici</h2>
               <p>Aparcabicis disponibles.</p>
               <label class="toggle">
-                <input type="checkbox" id="bike-parking-toggle" checked />
+                <input type="checkbox" id="bike-parking-toggle" />
                 <span>Mostrar aparcabicis</span>
                 <span class="chip" id="bike-parking-count">0</span>
               </label>
@@ -134,17 +163,17 @@
               <h2>Car Sharing</h2>
               <p>Guppy Asturias: coches, zonas y puntos guppy.</p>
               <label class="toggle">
-                <input type="checkbox" id="car-zones-toggle" checked />
+                <input type="checkbox" id="car-zones-toggle" />
                 <span>Mostrar zonas</span>
                 <span class="chip" id="car-zones-count">0</span>
               </label>
               <label class="toggle">
-                <input type="checkbox" id="car-toggle" checked />
+                <input type="checkbox" id="car-toggle" />
                 <span>Mostrar coches</span>
                 <span class="chip" id="car-count">0</span>
               </label>
               <label class="toggle">
-                <input type="checkbox" id="car-poi-toggle" checked />
+                <input type="checkbox" id="car-poi-toggle" />
                 <span>Mostrar puntos</span>
                 <span class="chip" id="car-poi-count">0</span>
               </label>
@@ -186,19 +215,19 @@
                 <span>Bus</span>
               </label>
               <label class="toggle">
-                <input type="checkbox" id="intermodal-bike-toggle" checked />
+                <input type="checkbox" id="intermodal-bike-toggle" />
                 <span>Bicis</span>
               </label>
               <label class="toggle">
-                <input type="checkbox" id="intermodal-parking-toggle" checked />
+                <input type="checkbox" id="intermodal-parking-toggle" />
                 <span>Aparcabicis</span>
               </label>
               <label class="toggle">
-                <input type="checkbox" id="intermodal-stops-toggle" checked />
+                <input type="checkbox" id="intermodal-stops-toggle" />
                 <span>Paradas</span>
               </label>
               <label class="toggle">
-                <input type="checkbox" id="intermodal-car-toggle" checked />
+                <input type="checkbox" id="intermodal-car-toggle" />
                 <span>Car sharing</span>
               </label>
             </div>

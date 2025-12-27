@@ -26,6 +26,15 @@ const busLinesAllBtn = document.getElementById("bus-lines-all");
 const busLinesNoneBtn = document.getElementById("bus-lines-none");
 const busStopsToggle = document.getElementById("bus-stops-toggle");
 const busStopsCountEl = document.getElementById("bus-stops-count");
+const ctaRoutesToggle = document.getElementById("cta-routes-toggle");
+const ctaRoutesCountEl = document.getElementById("cta-routes-count");
+const ctaStopsToggle = document.getElementById("cta-stops-toggle");
+const ctaStopsCountEl = document.getElementById("cta-stops-count");
+const ctaLinesLegendEl = document.getElementById("cta-lines-legend");
+const ctaLinesAllBtn = document.getElementById("cta-lines-all");
+const ctaLinesNoneBtn = document.getElementById("cta-lines-none");
+const ctaStopSearch = document.getElementById("cta-stop-search");
+const ctaStopSelect = document.getElementById("cta-stop-select");
 const bikeToggle = document.getElementById("bike-toggle");
 const bikeCountEl = document.getElementById("bike-count");
 const bikeParkingToggle = document.getElementById("bike-parking-toggle");
@@ -42,6 +51,7 @@ const departuresEl = document.getElementById("departures");
 const trainCardEl = document.getElementById("train-card");
 const busCardEl = document.getElementById("bus-card");
 const busStopCardEl = document.getElementById("bus-stop-card");
+const ctaStopCardEl = document.getElementById("cta-stop-card");
 const bikeCardEl = document.getElementById("bike-card");
 const carCardEl = document.getElementById("car-card");
 const tabs = Array.from(document.querySelectorAll(".panel-tab"));
@@ -87,6 +97,7 @@ const trainLayerGroup = L.layerGroup().addTo(map);
 const busLinesLayerGroup = L.layerGroup().addTo(map);
 const busLayerGroup = L.layerGroup().addTo(map);
 const busStopsLayerGroup = L.layerGroup().addTo(map);
+const ctaRoutesLayerGroup = L.layerGroup().addTo(map);
 const bikeLayerGroup = L.layerGroup().addTo(map);
 const bikeParkingLayerGroup = L.layerGroup().addTo(map);
 const carZonesLayerGroup = L.layerGroup().addTo(map);
@@ -99,6 +110,8 @@ const bikeMarkers = new Map();
 const bikeParkingMarkers = new Map();
 const carMarkers = new Map();
 const carPoiMarkers = new Map();
+const ctaStopsLayerGroup = L.layerGroup().addTo(map);
+const ctaStopMarkers = new Map();
 const linePolylines = new Map();
 const lineMeta = new Map();
 const selectedLines = new Set();
@@ -116,6 +129,15 @@ let lastBusStopCount = 0;
 let busLinesLoaded = false;
 let busStopsLoaded = false;
 let busStopsLoadedKey = "";
+let ctaRoutesLoaded = false;
+let lastCtaRouteCount = 0;
+let ctaStopsLoaded = false;
+let lastCtaStopCount = 0;
+const ctaRoutePolylines = new Map();
+const ctaRouteMeta = new Map();
+const ctaSelectedLines = new Set();
+let lastCtaStops = [];
+let selectedCtaStopId = null;
 let selectedBusId = null;
 let selectedBusLineId = null;
 let lastBikeCount = 0;
@@ -245,6 +267,84 @@ function setBusStopCard(stop, lines) {
     </div>
     <div class="row"><span>Lineas</span><span>${lineLabels}</span></div>
   `;
+}
+
+function setCtaStopCard(stop, lines) {
+  if (!ctaStopCardEl) return;
+  if (!stop) {
+    ctaStopCardEl.innerHTML = '<div class="empty">Haz click en una parada CTA.</div>';
+    return;
+  }
+  const name = stop.name || `Parada ${stop.id}`;
+  const desc = stop.desc || "";
+  const title = desc ? `${name} · ${desc}` : name;
+  const formatStop = (item) => {
+    const label = item.name || item.id;
+    const labelDesc = item.desc ? ` ${item.desc}` : "";
+    const code = item.id || "-";
+    return `<span class="cta-stop-chip">[${label}]${labelDesc} [CTA ${code}]</span>`;
+  };
+  const lineBlocks = Array.isArray(lines) && lines.length
+    ? lines
+        .map((line) => {
+          const lineName = line.shortName || line.longName || line.id || "-";
+          const stopsLabel = Array.isArray(line.stops) && line.stops.length
+            ? line.stops.map((s) => formatStop(s)).join(" <span class=\"cta-stop-sep\">·</span> ")
+            : "Sin datos";
+          return `
+            <div class="cta-line-block">
+              <div class="cta-line-name">${lineName}</div>
+              <div class="cta-line-stops">${stopsLabel}</div>
+            </div>
+          `;
+        })
+        .join("")
+    : '<div class="empty">Sin datos</div>';
+  ctaStopCardEl.innerHTML = `
+    <div class="title">
+      <span>${title}</span>
+      <span class="line-pill" style="background:#364fc7; color:#fff;">CTA</span>
+    </div>
+    ${lineBlocks}
+  `;
+}
+
+function normalizeText(text) {
+  return (text || "")
+    .toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function renderCtaStopOptions(query = "") {
+  if (!ctaStopSelect) return;
+  const normalized = normalizeText(query);
+  const stops = lastCtaStops
+    .filter((stop) => {
+      const name = normalizeText(stop.name || "");
+      const desc = normalizeText(stop.desc || "");
+      return !normalized || name.includes(normalized) || desc.includes(normalized);
+    })
+    .sort((a, b) => (a.name || "").localeCompare(b.name || "", "es"));
+  const current = ctaStopSelect.value;
+  ctaStopSelect.innerHTML = '<option value="">Elige una parada CTA</option>';
+  stops.slice(0, 250).forEach((stop) => {
+    const option = document.createElement("option");
+    option.value = stop.id;
+    option.textContent = stop.desc ? `${stop.name} · ${stop.desc}` : stop.name || stop.id;
+    ctaStopSelect.appendChild(option);
+  });
+  if (current) {
+    ctaStopSelect.value = current;
+  }
+}
+
+function focusCtaStop(stop) {
+  if (!stop) return;
+  const target = [stop.lat, stop.lon];
+  const nextZoom = Math.max(map.getZoom(), 13);
+  map.flyTo(target, nextZoom, { duration: 0.6 });
 }
 
 function setBikeCard(station) {
@@ -483,6 +583,18 @@ function toggleMarkerNearby(marker, isNearby) {
   const el = marker?.getElement?.();
   if (!el) return;
   el.classList.toggle("marker-nearby", isNearby);
+}
+
+function toggleMarkerSelected(marker, isSelected) {
+  const el = marker?.getElement?.();
+  if (!el) return;
+  el.classList.toggle("marker-selected", isSelected);
+}
+
+function updateCtaStopSelection() {
+  ctaStopMarkers.forEach((marker, id) => {
+    toggleMarkerSelected(marker, id === selectedCtaStopId);
+  });
 }
 
 function haversineMeters(lat1, lon1, lat2, lon2) {
@@ -811,6 +923,30 @@ async function loadBusLineMeta() {
   renderBusLegend();
 }
 
+function renderCtaLegend() {
+  if (!ctaLinesLegendEl) return;
+  ctaLinesLegendEl.innerHTML = "";
+  const ids = Array.from(ctaRouteMeta.keys()).sort((a, b) => a.localeCompare(b));
+  ids.forEach((id) => {
+    const meta = ctaRouteMeta.get(id);
+    if (!meta) return;
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "legend-item";
+    if (!ctaSelectedLines.has(id)) {
+      item.classList.add("inactive");
+    }
+    item.dataset.ctaLine = id;
+    const label = document.createElement("span");
+    label.textContent = meta.name || id;
+    const swatch = document.createElement("span");
+    swatch.className = "swatch";
+    swatch.style.background = meta.color;
+    item.append(label, swatch);
+    ctaLinesLegendEl.appendChild(item);
+  });
+}
+
 function applyBusLineVisibility() {
   busLinesLayerGroup.clearLayers();
   for (const [id, polylines] of busLinePolylines.entries()) {
@@ -818,6 +954,16 @@ function applyBusLineVisibility() {
     polylines.forEach((polyline) => polyline.addTo(busLinesLayerGroup));
   }
   renderBusLegend();
+}
+
+function applyCtaLineVisibility() {
+  ctaRoutesLayerGroup.clearLayers();
+  for (const [id, polylines] of ctaRoutePolylines.entries()) {
+    if (!ctaSelectedLines.has(id)) continue;
+    polylines.forEach((polyline) => polyline.addTo(ctaRoutesLayerGroup));
+  }
+  renderCtaLegend();
+  loadCtaStops();
 }
 
 function applyLineVisibility() {
@@ -1032,6 +1178,16 @@ function buildBikeParkingIcon() {
     html,
     iconSize: [22, 22],
     iconAnchor: [11, 11],
+  });
+}
+
+function buildCtaStopIcon() {
+  const html = '<div class="marker marker-cta-stop" style="--marker-color:#364fc7">C</div>';
+  return L.divIcon({
+    className: "marker-wrap",
+    html,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9],
   });
 }
 
@@ -1371,6 +1527,81 @@ function updateBikeParkingMarkers(items) {
   }
 }
 
+function updateCtaStopMarkers(stops) {
+  const activeIds = new Set();
+  stops.forEach((stop) => {
+    const id = String(stop.id);
+    const lat = Number(stop.lat);
+    const lon = Number(stop.lon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+    const next = [lat, lon];
+    activeIds.add(id);
+    const existing = ctaStopMarkers.get(id);
+    if (!existing) {
+      const stopLabel = stop.desc ? `${stop.name || "Parada CTA"} · ${stop.desc}` : stop.name || "Parada CTA";
+      const marker = L.marker(next, {
+        icon: buildCtaStopIcon(),
+        keyboard: false,
+      })
+        .addTo(ctaStopsLayerGroup)
+        .bindPopup(`<strong>${stopLabel}</strong>`);
+      marker._stop = stop;
+      marker.on("click", () => {
+        setActiveTab("bus");
+        selectedCtaStopId = id;
+        updateCtaStopSelection();
+        setCtaStopCard(stop, null);
+        if (ctaRoutesToggle && !ctaRoutesToggle.checked) {
+          ctaRoutesToggle.checked = true;
+          loadCtaRoutes();
+        }
+        if (ctaStopsToggle && !ctaStopsToggle.checked) {
+          ctaStopsToggle.checked = true;
+          loadCtaStops();
+        }
+        if (stop.routeIds?.length) {
+          ctaSelectedLines.clear();
+          stop.routeIds.forEach((rid) => ctaSelectedLines.add(rid));
+          applyCtaLineVisibility();
+        }
+        const lines = (stop.routeIds || []).map((rid) => {
+          const meta = ctaRouteMeta.get(rid);
+          return {
+            id: rid,
+            shortName: meta?.name || rid,
+            longName: meta?.name || rid,
+          };
+        });
+        Promise.all(
+          lines.map(async (line) => {
+            const stops = await loadCtaRouteStops(line.id);
+            return { ...line, stops };
+          })
+        ).then((linesWithStops) => {
+          setCtaStopCard(stop, linesWithStops);
+        });
+      });
+      ctaStopMarkers.set(id, marker);
+    } else {
+      const stopLabel = stop.desc ? `${stop.name || "Parada CTA"} · ${stop.desc}` : stop.name || "Parada CTA";
+      existing.setLatLng(next);
+      existing._stop = stop;
+      existing.setPopupContent(`<strong>${stopLabel}</strong>`);
+    }
+  });
+  for (const [id, marker] of ctaStopMarkers.entries()) {
+    if (!activeIds.has(id)) {
+      ctaStopsLayerGroup.removeLayer(marker);
+      ctaStopMarkers.delete(id);
+    }
+  }
+  if (selectedCtaStopId && !activeIds.has(selectedCtaStopId)) {
+    selectedCtaStopId = null;
+    setCtaStopCard(null, null);
+  }
+  updateCtaStopSelection();
+}
+
 function updateCarMarkers(vehicles) {
   const activeIds = new Set();
   vehicles.forEach((car) => {
@@ -1535,6 +1766,41 @@ function drawBusLines(data) {
   applyBusLineVisibility();
   lastBusLineCount = polylines.length;
   if (busLinesCountEl) busLinesCountEl.textContent = String(lastBusLineCount);
+}
+
+function drawCtaRoutes(data) {
+  ctaRoutesLayerGroup.clearLayers();
+  ctaRoutePolylines.clear();
+  ctaRouteMeta.clear();
+  if (!data || !Array.isArray(data.routes)) {
+    lastCtaRouteCount = 0;
+    if (ctaRoutesCountEl) ctaRoutesCountEl.textContent = "0";
+    return;
+  }
+  let count = 0;
+  data.routes.forEach((route) => {
+    const coords = route.coords || [];
+    if (coords.length < 2) return;
+    const color = route.color || "#0b7285";
+    if (!ctaRouteMeta.has(route.id)) {
+      const name = route.shortName || route.longName || route.id;
+      ctaRouteMeta.set(route.id, { color, name });
+    }
+    const polyline = L.polyline(coords, {
+      color,
+      weight: 3,
+      opacity: 0.6,
+    });
+    if (!ctaRoutePolylines.has(route.id)) {
+      ctaRoutePolylines.set(route.id, []);
+    }
+    ctaRoutePolylines.get(route.id).push(polyline);
+    count += 1;
+  });
+  // CTA: keep lines unselected by default until the user picks them.
+  applyCtaLineVisibility();
+  lastCtaRouteCount = count;
+  if (ctaRoutesCountEl) ctaRoutesCountEl.textContent = String(count);
 }
 
 function filterTrenes(trenes) {
@@ -1863,6 +2129,96 @@ async function loadBusStops() {
   return lastBusStopCount;
 }
 
+async function loadCtaRoutes() {
+  if (!ctaRoutesToggle?.checked) {
+    if (map.hasLayer(ctaRoutesLayerGroup)) {
+      map.removeLayer(ctaRoutesLayerGroup);
+    }
+    lastCtaRouteCount = 0;
+    if (ctaRoutesCountEl) ctaRoutesCountEl.textContent = "0";
+    return 0;
+  }
+  if (ctaRoutesLoaded) {
+    if (!map.hasLayer(ctaRoutesLayerGroup)) {
+      ctaRoutesLayerGroup.addTo(map);
+    }
+    if (ctaRoutesCountEl) ctaRoutesCountEl.textContent = String(lastCtaRouteCount);
+    return lastCtaRouteCount;
+  }
+  const response = await apiFetch("/api/cta/routes-geo");
+  if (!response.ok) {
+    return 0;
+  }
+  const data = await response.json();
+  drawCtaRoutes(data);
+  ctaRoutesLoaded = true;
+  ctaRoutesLayerGroup.addTo(map);
+  return lastCtaRouteCount;
+}
+
+async function loadCtaStopsData() {
+  const response = await apiFetch("/api/cta/stops");
+  if (!response.ok) {
+    return null;
+  }
+  const data = await response.json();
+  const stops = Array.isArray(data.stops) ? data.stops : [];
+  lastCtaStops = stops;
+  if (Array.isArray(data.routes)) {
+    data.routes.forEach((route) => {
+      const id = String(route.id || "");
+      if (!id) return;
+      if (!ctaRouteMeta.has(id)) {
+        ctaRouteMeta.set(id, {
+          color: route.color || "#0b7285",
+          name: route.shortName || route.longName || id,
+        });
+      }
+    });
+    renderCtaLegend();
+  }
+  renderCtaStopOptions(ctaStopSearch?.value || "");
+  return stops;
+}
+
+async function loadCtaStops() {
+  const stops = await loadCtaStopsData();
+  if (!ctaStopsToggle?.checked) {
+    if (map.hasLayer(ctaStopsLayerGroup)) {
+      map.removeLayer(ctaStopsLayerGroup);
+    }
+    ctaStopMarkers.clear();
+    ctaStopsLayerGroup.clearLayers();
+    lastCtaStopCount = 0;
+    if (ctaStopsCountEl) ctaStopsCountEl.textContent = "0";
+    return 0;
+  }
+  if (!stops) return 0;
+  const filtered =
+    ctaSelectedLines.size === 0 && ctaRouteMeta.size
+      ? []
+      : stops.filter((stop) =>
+          !ctaSelectedLines.size
+            ? true
+            : (stop.routeIds || []).some((id) => ctaSelectedLines.has(id))
+        );
+  updateCtaStopMarkers(filtered);
+  lastCtaStopCount = filtered.length;
+  if (ctaStopsCountEl) ctaStopsCountEl.textContent = String(lastCtaStopCount);
+  if (!map.hasLayer(ctaStopsLayerGroup)) {
+    ctaStopsLayerGroup.addTo(map);
+  }
+  return lastCtaStopCount;
+}
+
+async function loadCtaRouteStops(routeId) {
+  if (!routeId) return [];
+  const response = await apiFetch(`/api/cta/route-stops?route=${encodeURIComponent(routeId)}`);
+  if (!response.ok) return [];
+  const data = await response.json();
+  return Array.isArray(data.stops) ? data.stops : [];
+}
+
 async function loadBusStopLines(stopId) {
   if (!stopId) return [];
   const response = await apiFetch(`/api/emtusa/paradas-lineas?parada=${encodeURIComponent(stopId)}`);
@@ -1944,6 +2300,8 @@ async function init() {
     await loadBusLines();
     await loadBuses();
     await loadBusStops();
+    await loadCtaRoutes();
+    await loadCtaStops();
     await loadBikeStations();
     await loadBikeParking();
     await loadCarData();
@@ -1970,6 +2328,8 @@ async function init() {
         await loadBusLines();
         await loadBuses();
         await loadBusStops();
+        await loadCtaRoutes();
+        await loadCtaStops();
       } catch (err) {
         setStatus("Error al actualizar buses", false);
         addDebugLog("Bus: fallo de actualizacion.");
@@ -2082,6 +2442,99 @@ busLinesNoneBtn?.addEventListener("click", async () => {
 
 busStopsToggle?.addEventListener("change", async () => {
   await loadBusStops();
+});
+
+ctaRoutesToggle?.addEventListener("change", async () => {
+  await loadCtaRoutes();
+});
+
+ctaStopsToggle?.addEventListener("change", async () => {
+  await loadCtaStops();
+});
+
+ctaLinesLegendEl?.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-cta-line]");
+  if (!button) return;
+  const id = button.dataset.ctaLine;
+  if (ctaSelectedLines.has(id)) {
+    ctaSelectedLines.delete(id);
+  } else {
+    ctaSelectedLines.add(id);
+  }
+  applyCtaLineVisibility();
+});
+
+ctaLinesAllBtn?.addEventListener("click", () => {
+  ctaSelectedLines.clear();
+  for (const id of ctaRouteMeta.keys()) {
+    ctaSelectedLines.add(id);
+  }
+  applyCtaLineVisibility();
+});
+
+ctaLinesNoneBtn?.addEventListener("click", () => {
+  ctaSelectedLines.clear();
+  applyCtaLineVisibility();
+});
+
+ctaStopSearch?.addEventListener("input", (event) => {
+  if (!lastCtaStops.length) {
+    loadCtaStopsData().then(() => {
+      renderCtaStopOptions(event.target.value);
+    });
+    return;
+  }
+  renderCtaStopOptions(event.target.value);
+});
+
+ctaStopSelect?.addEventListener("change", async (event) => {
+  const id = event.target.value;
+  selectedCtaStopId = id || null;
+  if (!id) {
+    setCtaStopCard(null, null);
+    updateCtaStopSelection();
+    return;
+  }
+  if (!lastCtaStops.length) {
+    await loadCtaStops();
+  }
+  const stop = lastCtaStops.find((item) => String(item.id) === id);
+  if (!stop) {
+    setCtaStopCard(null, null);
+    updateCtaStopSelection();
+    return;
+  }
+  updateCtaStopSelection();
+  setCtaStopCard(stop, null);
+  if (ctaRoutesToggle && !ctaRoutesToggle.checked) {
+    ctaRoutesToggle.checked = true;
+    await loadCtaRoutes();
+  }
+  if (ctaStopsToggle && !ctaStopsToggle.checked) {
+    ctaStopsToggle.checked = true;
+    await loadCtaStops();
+  }
+  if (stop.routeIds?.length) {
+    ctaSelectedLines.clear();
+    stop.routeIds.forEach((rid) => ctaSelectedLines.add(rid));
+    applyCtaLineVisibility();
+  }
+  const lines = (stop.routeIds || []).map((rid) => {
+    const meta = ctaRouteMeta.get(rid);
+    return {
+      id: rid,
+      shortName: meta?.name || rid,
+      longName: meta?.name || rid,
+    };
+  });
+  const linesWithStops = await Promise.all(
+    lines.map(async (line) => {
+      const stops = await loadCtaRouteStops(line.id);
+      return { ...line, stops };
+    })
+  );
+  setCtaStopCard(stop, linesWithStops);
+  focusCtaStop(stop);
 });
 
 bikeToggle?.addEventListener("change", async () => {
