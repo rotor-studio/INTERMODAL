@@ -30,3 +30,6 @@ Abre `http://localhost:5178`.
 ## Notas
 - El servidor cachea algunas respuestas (paradas, aparcabicis, guppy) para reducir carga.
 - El log de movimiento se guarda en `logs/movement-log.txt`.
+
+## Disclaimer
+Este proyecto es un test y un prototipo educativo. Las llamadas a APIs externas se realizan solo con fines de aprendizaje y pruebas. No hay intencion comercial ni uso en produccion.
