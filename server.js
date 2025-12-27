@@ -18,6 +18,8 @@ let emtusaToken = null;
 let emtusaTokenExpiry = 0;
 let emtusaLinesCache = null;
 let emtusaLinesExpiry = 0;
+let emtusaLinesSimpleCache = null;
+let emtusaLinesSimpleExpiry = 0;
 let emtusaStopsCache = null;
 let emtusaStopsExpiry = 0;
 const emtusaStopsByLineCache = new Map();
@@ -160,6 +162,26 @@ async function buildEmtusaLinesGeo() {
   return output;
 }
 
+async function buildEmtusaLinesSimple() {
+  const now = Date.now();
+  if (emtusaLinesSimpleCache && now < emtusaLinesSimpleExpiry) {
+    return emtusaLinesSimpleCache;
+  }
+  const linesResp = await fetchEmtusaJson("/lineas/lineas");
+  if (!linesResp || !linesResp.lineas) return null;
+  const lineEntries = Object.values(linesResp.lineas);
+  const lines = lineEntries.map((line) => ({
+    idlinea: line.idlinea,
+    codigo: line.codigo,
+    color: line.colorhex || line.colorHex || "2c3e50",
+    nombre: String(line.descripcion || line.nombreLinea || line.codigo || "").trim(),
+  }));
+  const data = { updated: new Date().toISOString(), lines };
+  emtusaLinesSimpleCache = data;
+  emtusaLinesSimpleExpiry = now + 6 * 60 * 60 * 1000;
+  return data;
+}
+
 async function buildEmtusaStops() {
   const now = Date.now();
   if (emtusaStopsCache && now < emtusaStopsExpiry) {
@@ -214,6 +236,15 @@ async function buildEmtusaStopsByLine(lineId) {
     expiresAt: now + 6 * 60 * 60 * 1000,
   });
   return data;
+}
+
+async function buildEmtusaLinesForStop(stopId) {
+  const linesResp = await fetchEmtusaJson(`/paradas/lineasParada/${stopId}`);
+  if (!Array.isArray(linesResp)) return null;
+  return {
+    updated: new Date().toISOString(),
+    lineas: linesResp,
+  };
 }
 
 function pointInPolygon(lng, lat, polygon) {
@@ -468,6 +499,43 @@ const server = http.createServer(async (req, res) => {
     if (!data) {
       res.writeHead(502, { "content-type": "application/json" });
       res.end(JSON.stringify({ error: "EMTUSA lineas failed" }));
+      return;
+    }
+    res.writeHead(200, {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "public, max-age=21600",
+    });
+    res.end(JSON.stringify(data));
+    return;
+  }
+
+  if (req.url.startsWith("/api/emtusa/lineas-simple")) {
+    const data = await buildEmtusaLinesSimple();
+    if (!data) {
+      res.writeHead(502, { "content-type": "application/json" });
+      res.end(JSON.stringify({ error: "EMTUSA lineas simple failed" }));
+      return;
+    }
+    res.writeHead(200, {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "public, max-age=21600",
+    });
+    res.end(JSON.stringify(data));
+    return;
+  }
+
+  if (req.url.startsWith("/api/emtusa/paradas-lineas")) {
+    const requestUrl = new URL(req.url, `http://localhost:${PORT}`);
+    const stopId = requestUrl.searchParams.get("parada");
+    if (!stopId) {
+      res.writeHead(400, { "content-type": "application/json" });
+      res.end(JSON.stringify({ error: "Missing parada" }));
+      return;
+    }
+    const data = await buildEmtusaLinesForStop(stopId);
+    if (!data) {
+      res.writeHead(502, { "content-type": "application/json" });
+      res.end(JSON.stringify({ error: "EMTUSA paradas lineas failed" }));
       return;
     }
     res.writeHead(200, {
