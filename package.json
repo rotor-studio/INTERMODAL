@@ -1,0 +1,8 @@
+{
+  "name": "renfe-mapa-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

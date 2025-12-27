@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Intermodal.ast</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+    <header class="topbar">
+      <div>
+        <h1>Intermodal.ast</h1>
+        <p>Movilidad en tiempo real en el area central asturiana</p>
+      </div>
+      <div class="badge" id="status">Conectando...</div>
+    </header>
+
+    <main>
+      <aside class="panel">
+        <div class="panel-tabs">
+          <button class="panel-tab active" data-tab="train" type="button">Tren</button>
+          <button class="panel-tab" data-tab="bus" type="button">Bus</button>
+          <button class="panel-tab" data-tab="bike" type="button">Bici</button>
+          <button class="panel-tab" data-tab="car" type="button">Car Sharing</button>
+          <button class="panel-tab" data-tab="intermodal" type="button">Intermodal</button>
+        </div>
+        <div class="panel-content">
+          <div class="panel-pane active" id="panel-train">
+            <div class="panel-section">
+              <h2>Lineas</h2>
+              <p>Filtra las lineas activas del nucleo Asturias.</p>
+              <div class="panel-actions">
+                <button class="btn" id="btn-all" type="button">Todas</button>
+                <button class="btn ghost" id="btn-none" type="button">Ninguna</button>
+              </div>
+              <div class="legend" id="lines-legend"></div>
+            </div>
+            <div class="panel-section">
+              <h2>Estaciones</h2>
+              <p>Selecciona una estacion para ver salidas.</p>
+              <input id="station-search" class="select" placeholder="Buscar estacion" />
+              <select id="station-select" class="select">
+                <option value="">Elige una estacion</option>
+              </select>
+              <div class="departures" id="departures">
+                <div class="empty">Sin estacion seleccionada.</div>
+              </div>
+            </div>
+            <div class="panel-section">
+              <h2>Tren seleccionado</h2>
+              <div class="train-card" id="train-card">
+                <div class="empty">Haz click en un tren del mapa.</div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-pane" id="panel-bus">
+            <div class="panel-section">
+              <h2>EMTUSA</h2>
+              <p>Autobuses en tiempo real (API EMTUSA).</p>
+              <div class="panel-actions">
+                <button class="btn" id="bus-lines-all" type="button">Todas</button>
+                <button class="btn ghost" id="bus-lines-none" type="button">Ninguna</button>
+              </div>
+              <details class="accordion" open>
+                <summary>Lineas EMTUSA</summary>
+                <div class="legend" id="bus-lines-legend"></div>
+              </details>
+              <label class="toggle">
+                <input type="checkbox" id="bus-lines-toggle" checked />
+                <span>Mostrar lineas</span>
+                <span class="chip" id="bus-lines-count">0</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="bus-toggle" checked />
+                <span>Mostrar buses</span>
+                <span class="chip" id="bus-count">0</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="bus-stops-toggle" checked />
+                <span>Mostrar paradas</span>
+                <span class="chip" id="bus-stops-count">0</span>
+              </label>
+            </div>
+            <div class="panel-section">
+              <h2>Bus seleccionado</h2>
+              <div class="train-card" id="bus-card">
+                <div class="empty">Haz click en un bus del mapa.</div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-pane" id="panel-bike">
+            <div class="panel-section">
+              <h2>Gijon Bici</h2>
+              <p>Estaciones y disponibilidad en tiempo real.</p>
+              <label class="toggle">
+                <input type="checkbox" id="bike-toggle" checked />
+                <span>Mostrar estaciones</span>
+                <span class="chip" id="bike-count">0</span>
+              </label>
+              <h2>Infraestructura bici</h2>
+              <p>Aparcabicis disponibles.</p>
+              <label class="toggle">
+                <input type="checkbox" id="bike-parking-toggle" checked />
+                <span>Mostrar aparcabicis</span>
+                <span class="chip" id="bike-parking-count">0</span>
+              </label>
+            </div>
+            <div class="panel-section">
+              <h2>Estacion seleccionada</h2>
+              <div class="train-card" id="bike-card">
+                <div class="empty">Haz click en una estacion del mapa.</div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-pane" id="panel-car">
+            <div class="panel-section">
+              <h2>Car Sharing</h2>
+              <p>Guppy Asturias: coches, zonas y puntos guppy.</p>
+              <label class="toggle">
+                <input type="checkbox" id="car-zones-toggle" checked />
+                <span>Mostrar zonas</span>
+                <span class="chip" id="car-zones-count">0</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="car-toggle" checked />
+                <span>Mostrar coches</span>
+                <span class="chip" id="car-count">0</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="car-poi-toggle" checked />
+                <span>Mostrar puntos</span>
+                <span class="chip" id="car-poi-count">0</span>
+              </label>
+            </div>
+            <div class="panel-section">
+              <h2>Elemento seleccionado</h2>
+              <div class="train-card" id="car-card">
+                <div class="empty">Haz click en un coche o punto guppy.</div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-pane" id="panel-intermodal">
+            <div class="panel-section">
+              <h2>Intermodal</h2>
+              <p>Alertas al pasar cerca de otros medios.</p>
+              <div class="panel-actions">
+                <button class="btn" id="intermodal-use-bus" type="button">Usar bus seleccionado</button>
+                <button class="btn ghost" id="intermodal-use-user" type="button">Usar mi ubicacion</button>
+                <button class="btn ghost" id="intermodal-clear" type="button">Cancelar</button>
+              </div>
+              <div class="intermodal-row">
+                <span>Bus actual</span>
+                <span id="intermodal-bus-label">Sin bus seleccionado</span>
+              </div>
+            </div>
+            <div class="panel-section">
+              <h2>Rango de alerta</h2>
+              <input id="intermodal-range" type="range" min="100" max="1500" step="50" value="500" />
+              <div class="intermodal-row">
+                <span>Rango</span>
+                <span id="intermodal-range-value">500 m</span>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="intermodal-train-toggle" checked />
+                <span>Trenes</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="intermodal-bus-toggle" checked />
+                <span>Bus</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="intermodal-bike-toggle" checked />
+                <span>Bicis</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="intermodal-parking-toggle" checked />
+                <span>Aparcabicis</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="intermodal-stops-toggle" checked />
+                <span>Paradas</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="intermodal-car-toggle" checked />
+                <span>Car sharing</span>
+              </label>
+            </div>
+            <div class="panel-section">
+              <h2>Alertas cercanas</h2>
+              <div class="train-card" id="intermodal-status">
+                <div class="empty">Sin alertas activas.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">Datos: tiempo-real.renfe.com (uso demostrativo)</footer>
+    <div class="debug-float" aria-live="polite">
+      <div class="debug-item"><span class="status-dot" id="debug-train-dot"></span>Tren: <span id="debug-train">--</span></div>
+      <div class="debug-item"><span class="status-dot" id="debug-bus-dot"></span>Bus: <span id="debug-bus">--</span></div>
+      <div class="debug-log" id="debug-log"></div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
